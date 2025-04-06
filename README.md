@@ -9,7 +9,7 @@
 
 
 ### A humanitarian platform to document and manage data related to detainees, missing persons, unidentified individuals, and national initiatives during the war in Sudan.
-
+Live [Aseer Platform]([https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig](https://aseer.net/))
 ## Features
 
 - ✅ Detainee management module with photos , details, and status
