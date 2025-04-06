@@ -67,9 +67,9 @@ php artisan storage:link
 php artisan migrate:fresh
 php artisan db:seed
 
-# dont forget to start queuing and run schedule on the background 
+# don't forget to start queuing and run schedule on the background 
 php artisan queue:work
-php artisan schedule:run 
+php artisan schedule:work 
 ```
 
 ### Credentials
