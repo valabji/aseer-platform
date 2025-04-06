@@ -185,11 +185,13 @@ This project uses automated PHP code formatting to maintain consistent code styl
 
 All formatting configurations are committed to the repository and will be automatically applied when following the setup instructions.
 
-### Author
-
-
 ### Author 
 https://digitalize.sd
 
 ### License
 The Laravel framework is open-sourced software licensed under the MIT license.
+
+
+<a href = "https://github.com/Tanu-N-Prabhu/Python/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=amolood/aseer-platform"/>
+</a>
