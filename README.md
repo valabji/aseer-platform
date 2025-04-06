@@ -158,5 +158,8 @@ toastr.success('We do have the Kapua suite available.', 'Turtle Bay Resort', {ti
 </div>
 ```
 
+### Author 
+https://digitalize.sd
+
 ### License
 The Laravel framework is open-sourced software licensed under the MIT license.
