@@ -20,7 +20,7 @@
                         @endif
                         <div class="col-12 px-2 d-flex btns-group {{$component['fields']['design_text_alignment']}}">
                             @foreach($component['fields']['buttons'] as $button)
-                            <a class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5 {{$button['fields']['class']}}" target="{{$button['fields']['url_open_type']}}" style="border-radius: 3px;">
+                            <a href="{{ $button['fields']['url'] }}" class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5 {{$button['fields']['class']}}" target="{{$button['fields']['url_open_type']}}" style="border-radius: 3px;">
                                 {{$button['fields']['title']}}
                             </a>
                             @endforeach
@@ -44,7 +44,7 @@
                         @if($component['fields']['buttons'] != null)
                         <div class="col-12 px-2 d-flex btns-group {{$component['fields']['design_text_alignment']}}">
                             @foreach($component['fields']['buttons'] as $button)
-                            <a class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5 {{$button['fields']['class']}}" target="{{$button['fields']['url_open_type']}}" style="border-radius: 3px;">
+                            <a href="{{ $button['fields']['url'] }}" class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5 {{$button['fields']['class']}}" target="{{$button['fields']['url_open_type']}}" style="border-radius: 3px;">
                                 {{$button['fields']['title']}}
                             </a>
                             @endforeach
@@ -69,7 +69,7 @@
                         @if($component['fields']['buttons'] != null)
                         <div class="col-12 px-2 d-flex btns-group {{$component['fields']['design_text_alignment']}}">
                             @foreach($component['fields']['buttons'] as $button)
-                            <a class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5 {{$button['fields']['class']}}" target="{{$button['fields']['url_open_type']}}" style="border-radius: 3px;">
+                            <a href="{{ $button['fields']['url'] }}" class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5 {{$button['fields']['class']}}" target="{{$button['fields']['url_open_type']}}" style="border-radius: 3px;">
                                 {{$button['fields']['title']}}
                             </a>
                             @endforeach
@@ -99,7 +99,7 @@
                                 @if($component['fields']['buttons'] != null)
                                 <div class="col-12 px-2 d-flex btns-group {{$component['fields']['design_text_alignment']}}">
                                     @foreach($component['fields']['buttons'] as $button)
-                                    <a class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5 {{$button['fields']['class']}}" target="{{$button['fields']['url_open_type']}}" style="border-radius: 3px;">
+                                    <a href="{{ $button['fields']['url'] }}" class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5 {{$button['fields']['class']}}" target="{{$button['fields']['url_open_type']}}" style="border-radius: 3px;">
                                         {{$button['fields']['title']}}
                                     </a>
                                     @endforeach
@@ -131,7 +131,7 @@
                                 @if($component['fields']['buttons'] != null)
                                 <div class="col-12 px-2 d-flex btns-group {{$component['fields']['design_text_alignment']}}">
                                     @foreach($component['fields']['buttons'] as $button)
-                                    <a class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5 {{$button['fields']['class']}}" target="{{$button['fields']['url_open_type']}}" style="border-radius: 3px;">
+                                    <a href="{{ $button['fields']['url'] }}" class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5 {{$button['fields']['class']}}" target="{{$button['fields']['url_open_type']}}" style="border-radius: 3px;">
                                         {{$button['fields']['title']}}
                                     </a>
                                     @endforeach
@@ -305,7 +305,7 @@
                             @if($component['fields']['buttons'] != null)
                             <div class="col-12 px-2 d-flex btns-group {{$component['fields']['design_text_alignment']}} mt-2">
                                 @foreach($component['fields']['buttons'] as $button)
-                                <a class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5 {{$button['fields']['class']}}" target="{{$button['fields']['url_open_type']}}" style="border-radius: 3px;">
+                                <a href="{{ $button['fields']['url'] }}" class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5 {{$button['fields']['class']}}" target="{{$button['fields']['url_open_type']}}" style="border-radius: 3px;">
                                     {{$button['fields']['title']}}
                                 </a>
                                 @endforeach
@@ -335,7 +335,7 @@
                                 'items_count' => $component['fields']['content']['items_count'],
                                 'view_type' => $component['fields']['content']['view_type'],
                                 'paginate' => $component['fields']['content']['paginate'],
-                                
+
                                 'id'=> $component['fields']['id'],
                                 'design_text_alignment'=> $component['fields']['design_text_alignment'],
                                 'design_min_height'=>$component['fields']['design_min_height'],
@@ -349,7 +349,7 @@
                             @if($component['fields']['buttons'] != null)
                             <div class="col-12 px-2 d-flex btns-group {{$component['fields']['design_text_alignment']}} mt-2">
                                 @foreach($component['fields']['buttons'] as $button)
-                                <a class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5 {{$button['fields']['class']}}" target="{{$button['fields']['url_open_type']}}" style="border-radius: 3px;">
+                                <a href="{{ $button['fields']['url'] }}" class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5 {{$button['fields']['class']}}" target="{{$button['fields']['url_open_type']}}" style="border-radius: 3px;">
                                     {{$button['fields']['title']}}
                                 </a>
                                 @endforeach
@@ -360,7 +360,47 @@
                     <div class="appended-html-css-js">{!!$component['fields']['design_custom_code']!!}</div>
                 </div>
                 @endif
+                @if($component['fields']['block_type'] == "component_numbers")
+                        <section class="wrapper image-wrapper bg-auto no-overlay bg-image text-center bg-map" data-image-src="./assets/img/map.png">
+                            <div class="container py-14 pt-md-16 pb-md-18">
+                                <div class="row pt-md-12">
+                                    <div class="col-lg-10 col-xl-9 col-xxl-8 mx-auto">
+                                        <h2 class="fs-15 text-uppercase text-muted mb-3 text-center">مرحباً بك في مجتمعنا</h2>
+                                        <h3 class="display-4 mb-8 px-lg-12 text-center">تعرف على مجتمعنا في أرقام.</h3>
+                                    </div>
+                                    <!-- /.row -->
+                                </div>
+                                <!-- /column -->
+                                <div class="row pb-md-12">
+                                    <div class="col-md-10 col-lg-9 col-xl-7 mx-auto">
+                                        <div class="row align-items-center counter-wrapper gy-4 gy-md-0">
+                                            <div class="col-md-4 text-center">
+                                                <h3 class="counter counter-lg text-primary text-center">+200</h3>
+                                                <p class="text-center">نجمة على جب هب</p>
+                                            </div>
+                                            <!--/column -->
+                                            <div class="col-md-4 text-center">
+                                                <h3 class="counter counter-lg text-primary text-center">+30.000</h3>
+                                                <p class="text-center">عضو في المجموعة</p>
+                                            </div>
+                                            <!--/column -->
+                                            <div class="col-md-4 text-center">
+                                                <h3 class="counter counter-lg text-primary text-center">+1000</h3>
+                                                <p class="text-center">نظام يستخدمها</p>
+                                            </div>
+                                            <!--/column -->
+                                        </div>
+                                        <!--/.row -->
+                                    </div>
+                                    <!-- /column -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.container -->
+                        </section>
+                @endif
             </div>
         </div>
     </div>
+
 </div>

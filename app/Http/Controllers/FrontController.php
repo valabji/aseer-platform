@@ -29,6 +29,7 @@ class FrontController extends Controller
             ->when($request->location, fn($q) => $q->where('location', $request->location))
             ->when($request->status, fn($q) => $q->where('status', $request->status))
             ->when($request->date, fn($q) => $q->whereDate('detention_date', $request->date))
+//            ->where('status', '!=', 'martyr')
             ->with('photos')
             ->orderByDesc('id')
             ->paginate(20);
@@ -40,6 +41,7 @@ class FrontController extends Controller
 
         return view('front.pages.detainees', compact('detainees', 'locations'));
     }
+
 
     // عرض بيانات أسير مفصل
     public function detainee_show($id)
@@ -81,7 +83,6 @@ class FrontController extends Controller
             'name' => 'required|string|max:255',
             'gender' => 'nullable|in:male,female',
             'birth_date' => 'nullable|date',
-            'national_id' => 'nullable|string|max:255',
             'location' => 'nullable|string|max:255',
             'detention_date' => 'nullable|date',
             'status' => 'required|in:detained,missing,released,martyr',
@@ -99,9 +100,9 @@ class FrontController extends Controller
         $data['is_approved'] = false;
 
         $detainee = Detainee::create($data);
-        // store photos and make the first one as featured
 
-        if ($request->hasFile('photos') && is_array($request->file('photos'))) {
+        // store photos and mark first one as featured
+        if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $index => $photo) {
                 $path = $photo->store('detainees', 'public');
 
@@ -112,12 +113,25 @@ class FrontController extends Controller
                 ]);
             }
         }
-        // make the user follow the detainee
+
         if (auth()->check()) {
-            $detainee->followers()->attach(auth()->id());
+            $user = auth()->user();
+
+            // تأكد من عدم تكرار المتابعة
+            $detainee->followers()->syncWithoutDetaching([$user->id]);
+
+            // تعيين المستخدم كأساس لهذا الأسير
+            $detainee->user_id = $user->id;
+            $detainee->save();
+
+            return view('front.pages.thanks');
+        } else {
+            return redirect()->back()->with('error', 'يجب تسجيل الدخول لإضافة أسير.');
         }
-        return redirect()->back()->with('success', 'تم إرسال البيانات بنجاح وستُراجع من قبل الإدارة قبل النشر.');
     }
+
+
+
 
     public function comment_post(Request $request)
     {

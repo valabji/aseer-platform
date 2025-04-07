@@ -361,17 +361,17 @@ body {
                                 </div>
                                 <div class="tab-content" id="nav-tabContent">
                                     <div v-if="selected_unique_id">
-                                        {{-- <draggable v-model="dums" handle=".handle" :group="{ name: 'people', pull: 'clone', put: false }" ghost-class="ghost" :sort="false" @change="log">
-                                        </draggable> --}}
-                                        {{-- <draggable :list="dums" :item-key="order" draggable=".item">
-                                            <div v-for="element in dums" :key="element.order" class="item">
-                                                @{{element.order}}
-                                            </div>
-                                            <button slot="footer" @click="addPeople">Add</button>
-                                        </draggable> --}}
-                                        {{-- <draggable :list="dums" group="people" @end="onEnd">
-                                            <div v-for="element in dums" :key="element.key">@{{element.key}}</div>
-                                        </draggable> --}}
+{{--                                        --}}{{-- <draggable v-model="dums" handle=".handle" :group="{ name: 'people', pull: 'clone', put: false }" ghost-class="ghost" :sort="false" @change="log">--}}
+{{--                                        </draggable> --}}
+{{--                                        --}}{{-- <draggable :list="dums" :item-key="order" draggable=".item">--}}
+{{--                                            <div v-for="element in dums" :key="element.order" class="item">--}}
+{{--                                                @{{element.order}}--}}
+{{--                                            </div>--}}
+{{--                                            <button slot="footer" @click="addPeople">Add</button>--}}
+{{--                                        </draggable> --}}
+{{--                                        --}}{{-- <draggable :list="dums" group="people" @end="onEnd">--}}
+{{--                                            <div v-for="element in dums" :key="element.key">@{{element.key}}</div>--}}
+{{--                                        </draggable> --}}
                                     </div>
                                     <div :class="{'show active': current_edit_tab === 'content'}" class="tab-pane fade" id="nav-content" role="tabpanel" aria-labelledby="content-tab">
                                         <div v-if="('content_title' in (contents[selected_page]?.find(block => block.id === selected_unique_id)?.fields || {}) )" class="col-12 px-0 my-2 py-2">
@@ -880,7 +880,7 @@ body {
                                                             <p :class="element.fields.design_text_alignment" class=' mb-3 mb-lg-5  font-1 font-lg-2 content_description' style="white-space: pre-line;opacity: 0.9">@{{element.fields.content_description}}</p>
                                                             <div class="col-12 px-2 d-flex btns-group" :class="element.fields.design_text_alignment">
                                                                 <div v-for="button in element.fields['buttons']">
-                                                                    <a class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5" :class="button.fields.class" :target="button.fields.url_open_type" style="border-radius: 3px;">
+                                                                    <a :href="button.fields.url" class="btn mx-1 font-1 font-lg-2 py-1 px-4 py-lg-2 px-lg-5" :class="button.fields.class" :target="button.fields.url_open_type" style="border-radius: 3px;">
                                                                         @{{button.fields.title}}
                                                                     </a>
                                                                 </div>
@@ -1416,7 +1416,7 @@ body {
                 );
                 this.contents[this.selected_page].push(object);
                 this.template_editor(unique_id,type);
-            }else if(type == "component_cta"){
+            }else if(type === "component_cta"){
                 var options = {...options,...{
                     "content_title":"هل أنت جاهز لتجربتك",
                     "content_sub_title":"",

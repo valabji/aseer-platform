@@ -18,7 +18,6 @@ class Detainee extends Model
         'name',
         'gender',
         'birth_date',
-        'national_id',
         'location',
         'detention_date',
         'status',

@@ -61,8 +61,6 @@
                     <!--/column -->
                 </div>
                 <!--/.row -->
-                {{-- <p class="text-center">جميع الحقوق محفوظة ©  موقع بيت التك {{date('Y')}} </p> --}}
-
                 <!-- /.social -->
             </div>
             <!-- /column -->
@@ -76,10 +74,20 @@
      style="background-image: linear-gradient(to right, rgba(0,0,0,0.01) , rgba(0,0,0,0.01) );border-top:1px solid rgb(145 145 145 / 3%);display: flex; align-items: center;justify-content: center;direction: rtl;">
     <div class="container ">
         <div class="col-12 row d-flex justify-content-between p-0">
-            <div class="col-12 text-center mt-1 mb-2 pt-3 pb-2 ">
-                <p style="font-size: 14px;line-height: 1.8;margin:0px" class="my-0  kufi text-center"><span
-                        class="d-inline-block kufi"> جميع الحقوق محفوظة © {{$settings['website_name']}} {{date('Y')}} </span>
-                    <span class="d-inline-block kufi"><a href="https://digitalize.sd">ديجيتالايز لاب لتقنية المعلومات</a></span></p></div>
+            <div class="col-12 text-center mt-1 mb-2 pt-3 pb-2">
+                <p style="font-size: 14px;line-height: 1.8;margin:0px" class="my-0 kufi text-center">
+                    <span class="d-inline-block kufi">جميع الحقوق محفوظة © {{$settings['website_name']}} {{date('Y')}}</span> |
+                    <span class="d-inline-block kufi">
+                تطوير <a href="https://digitalize.sd" target="_blank">ديجيتالايز لاب</a>
+            </span> |
+                    <span class="d-inline-block kufi">
+                استضافة <a href="https://mazinhost.net" target="_blank">مازن هوست</a>
+            </span>
+                <p class="my-0 kufi text-center" style="font-size: 14px;line-height: 1.8;">
+                    المنصة دي مفتوحة المصدر، الكود بتاعها متاح في <a href="https://github.com/amolood/aseer-platform" target="_blank">GitHub</a>.
+                </p>
+            </div>
         </div>
+
     </div>
 </div>

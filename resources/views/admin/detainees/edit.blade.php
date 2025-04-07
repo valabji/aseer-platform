@@ -33,12 +33,6 @@
                         <input type="date" name="birth_date" class="form-control"
                                value="{{ old('birth_date', $detainee->birth_date) }}">
                     </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">الرقم الوطني</label>
-                        <input type="text" name="national_id" class="form-control"
-                               value="{{ old('national_id', $detainee->national_id) }}">
-                    </div>
                 </div>
             </div>
 

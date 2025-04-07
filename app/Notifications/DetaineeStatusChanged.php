@@ -21,9 +21,7 @@ class DetaineeStatusChanged extends Notification
 
         $this->subject = 'تحديث حالة الأسير';
         $this->greeting = 'مرحباً';
-        $this->content = 'تم تغيير حالة الأسير <strong>' . $detainee->name . '</strong> إلى <span class="badge bg-' .
-            ($detainee->status === 'martyr' ? 'danger' : ($detainee->status === 'released' ? 'success' : 'danger')) . '">' .
-            __('status.' . $detainee->status) . '</span>';
+        $this->content = 'تم تغيير حالة الأسير <strong>' . $detainee->name . '</strong> إلى <span class="badge bg-' . ($detainee->status === 'martyr' ? 'danger' : ($detainee->status === 'released' ? 'success' : 'danger')) . '">' . __('status.' . $detainee->status) . '</span>';
 
         $this->actionText = 'عرض تفاصيل الأسير';
         $this->actionUrl = route('front.detainees.show', $detainee->id);

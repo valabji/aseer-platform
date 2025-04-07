@@ -13,7 +13,7 @@
                 {{-- Share on social media --}}
                 <div class="dropdown">
                     <button class="btn btn-outline-primary rounded-pill px-4 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-share-alt me-2"></i> شارك
+                        <i class="fas fa-share-alt me-2"></i>   شارك
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end text-end">
                         <li>
@@ -25,7 +25,7 @@
                         <li>
                             <a class="dropdown-item" target="_blank"
                                href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}&text=قصة أسير">
-                                <i class="fab fa-twitter me-2 text-info"></i> تويتر
+                                <i class="fab fa-twitter me-2 text-info"></i>  تويتر
                             </a>
                         </li>
                         <li>
@@ -49,14 +49,14 @@
                 </div>
 
                 {{-- Other buttons --}}
-                @if($detainee->status !== 'martyr')
-                    <button class="btn btn-outline-warning rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#seenModal">
-                        <i class="fas fa-eye me-2"></i> رأيت هذا الشخص
-                    </button>
-                @endif
-                <button class="btn btn-outline-danger rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#reportModal">
-                    <i class="fas fa-flag me-2"></i> تبليغ عن خطأ
-                </button>
+{{--                @if($detainee->status !== 'martyr')--}}
+{{--                    <button class="btn btn-outline-warning rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#seenModal">--}}
+{{--                        <i class="fas fa-eye me-2"></i> رأيت هذا الشخص --}}
+{{--                    </button>--}}
+{{--                @endif--}}
+{{--                <button class="btn btn-outline-danger rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#reportModal">--}}
+{{--                    <i class="fas fa-flag me-2"></i> تبليغ عن خطأ--}}
+{{--                </button>--}}
             </div>
         </div>
 
@@ -116,7 +116,7 @@
                             @if($detainee->status)
                                 <tr>
                                     <th scope="row"><i class="fas fa-flag me-2"></i> الحالة</th>
-                                    <td><span class="badge bg-{{ $detainee->status === 'martyr' ? 'danger' : ($detainee->status === 'released' ? 'success' : 'warning') }}">{{ __('status.' . $detainee->status) }}</span></td>
+                                    <td><span class="badge bg-{{ $detainee->status === 'martyr' ? 'danger' : ($detainee->status === 'released' ? 'success' : 'danger') }}">{{ __('status.' . $detainee->status) }}</span></td>
                                 </tr>
                             @endif
                             @if($detainee->detaining_authority)
@@ -137,25 +137,26 @@
                                     <td>{{ $detainee->is_forced_disappearance ? 'نعم' : 'لا' }}</td>
                                 </tr>
                             @endif
-                            @if($detainee->family_contact_name && $detainee->status !== 'martyr')
-                                <tr>
-                                    <th scope="row"><i class="fas fa-user-friends me-2"></i> جهة الاتصال</th>
-                                    <td>{{ $detainee->family_contact_name }}</td>
-                                </tr>
-                            @endif
-                            @if($detainee->family_contact_phone && $detainee->status !== 'martyr')
-                                <tr>
-                                    <th scope="row"><i class="fas fa-phone-alt me-2"></i> رقم جهة الاتصال</th>
-                                    <td>{{ $detainee->family_contact_phone }}</td>
-                                </tr>
-                            @endif
+{{--                            @if($detainee->family_contact_name && $detainee->status !== 'martyr')--}}
+{{--                                <tr>--}}
+{{--                                    <th scope="row"><i class="fas fa-user-friends me-2"></i> جهة الاتصال</th>--}}
+{{--                                    <td>{{ $detainee->family_contact_name }}</td>--}}
+{{--                                    <td>{{ $detainee->family_contact_name }}</td>--}}
+{{--                                </tr>--}}
+{{--                            @endif--}}
+{{--                            @if($detainee->family_contact_phone && $detainee->status !== 'martyr')--}}
+{{--                                <tr>--}}
+{{--                                    <th scope="row"><i class="fas fa-phone-alt me-2"></i> رقم جهة الاتصال</th>--}}
+{{--                                    <td>{{ $detainee->family_contact_phone }}</td>--}}
+{{--                                </tr>--}}
+{{--                            @endif--}}
                             @if($detainee->source)
                                 <tr>
                                     <th scope="row"><i class="fas fa-link me-2"></i> المصدر</th>
                                     <td>{{ $detainee->source }}</td>
                                 </tr>
                             @endif
-                            @if($detainee->status === 'martyr')
+                            @if($detainee->status === 'martyr' && $detainee->martyr_date != null || $detainee->martyr_place != null || $detainee->martyr_reason != null || $detainee->martyr_notes != null)
                                 <tr>
                                     <td colspan="2">
                                         <div class="alert alert-danger">
@@ -195,7 +196,7 @@
 
                         {{-- Photo Gallery --}}
 
-                        @if($photos->count() > 0)
+                        @if($photos->count() > 1)
                             <section class="bg-light py-5">
                                 <div class="container">
                                     <div class="text-center mb-5">
@@ -227,13 +228,13 @@
 
 
         {{-- Call Button --}}
-        @if($detainee->family_contact_phone && $detainee->status !== 'martyr')
-            <div class="text-center mb-5">
-                <a href="tel:{{ $detainee->family_contact_phone }}" class="btn btn-lg btn-success rounded-pill px-5 py-3 shadow-lg">
-                    <i class="fal fa-phone fa-lg me-2"></i> اتصل بالعائلة
-                </a>
-            </div>
-        @endif
+{{--        @if($detainee->family_contact_phone && $detainee->status !== 'martyr')--}}
+{{--            <div class="text-center mb-5">--}}
+{{--                <a href="tel:{{ $detainee->family_contact_phone }}" class="btn btn-lg btn-success rounded-pill px-5 py-3 shadow-lg">--}}
+{{--                    <i class="fal fa-phone fa-lg me-2"></i> اتصل بالعائلة--}}
+{{--                </a>--}}
+{{--            </div>--}}
+{{--        @endif--}}
 
         {{-- Related Detainees --}}
         @if($relatedDetainees->count())

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->date('birth_date')->nullable();
-            $table->string('national_id')->nullable();
             $table->string('location')->nullable();
             $table->date('detention_date')->nullable();
             $table->enum('status', ['detained', 'missing', 'released', 'martyr'])->default('detained');

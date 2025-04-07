@@ -903,6 +903,7 @@ body {
                                                         </div>
                                                         <div v-html="element.fields.design_custom_code"></div>
                                                     </div>
+
                                                     <div v-if="element.fields.block_type=='component_text'" class="container p-3">
                                                         <div :class="element.fields.design_text_alignment" class='col-12 mx-auto '>
                                                             <h2 :class="element.fields.design_text_alignment" class='font-3 font-lg-4 mb-lg-3 mb-1 content_title' style="color:inherit;">@{{element.fields.content_title}}</h2>

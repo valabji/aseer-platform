@@ -27,7 +27,7 @@
               <div class="container py-14 py-md-16">
                 <div class="row">
                   <div class="col-xl-8 mx-auto">
-                     
+
                     {{-- <div class="col-12 py-4">
                         {!!$settings['contact_page']!!}
                     </div> --}}
@@ -44,7 +44,7 @@
                               <div class="form-floating mb-4">
                                 <input id="form_name" type="text" name="name" class="form-control" placeholder="محمد" required>
                                 <label for="form_name">الاسم بالكامل *</label>
-                               
+
                               </div>
                             </div>
                             <!-- /column -->
@@ -59,7 +59,7 @@
                               <div class="form-floating mb-4">
                                 <input id="form_email" type="email" name="email" class="form-control" placeholder="ahmed@gmail.com" required>
                                 <label for="form_email">البريد *</label>
-                               
+
                               </div>
                             </div>
 
@@ -67,14 +67,15 @@
                               <div class="form-floating mb-4">
                                 <textarea id="form_message" name="message" class="form-control" placeholder="محتوى رسالتك" style="height: 150px" required></textarea>
                                 <label for="form_message">رسالتك *</label>
-                               
+
                               </div>
                             </div>
 
                             <!-- /column -->
                             <div class="col-12">
                               <input type="submit" class="btn btn-primary rounded-pill btn-send mb-3" value="ارسل رسالتك">
-                              <p class="text-muted"><strong>*</strong> الحقول هذه مطلوبة. @if(env('APP_ENV')=="local") (برجاء تفعيل Google ReCaptha في ملف .env)@endif</p>
+                              <p class="text-muted"><strong>*</strong> الحقول هذه مطلوبة. </p>
+                                @if(env('RECAPTCHA_SITE_KEY') == '') (برجاء تفعيل Google ReCaptha في ملف .env)@endif
                             </div>
                             <!-- /column -->
                           </div>
@@ -130,7 +131,7 @@
             </section>
 
 
- 
+
 </div>
 @endsection
 @section('scripts')
@@ -141,7 +142,7 @@ grecaptcha.ready(function() {
     event.preventDefault();
     grecaptcha.execute('{{ env("RECAPTCHA_SITE_KEY") }}', {action: 'contact'}).then(function(token) {
         console.log(token);
-       document.getElementById("recaptcha").value= token; 
+       document.getElementById("recaptcha").value= token;
        document.getElementById('contact-form').submit();
     });
   }, false);

@@ -70,28 +70,33 @@
                         <div class="card h-100 shadow-sm border-0">
                             @php
                                 $image = $detainee->photos->first()->path ?? 'images/default-avatar.png';
+                                if(str_contains($image,'images/default-avatar.png')){
+                                    $image = 'images/default-avatar.png';
+                                    }else{
+                                    $image = 'storage/public/' . $image;
+                                    }
                             @endphp
                             {{-- Image --}}
                             <a href="{{ route('front.detainees.show', $detainee->id) }}" target="_blank">
-                                <img src="{{ asset('storage/public/' . $image) }}" class="card-img-top" style="height: 220px; object-fit: cover;" alt="صورة الأسير">
+                                <img src="{{ asset($image) }}" class="card-img-top"
+                                     style="height: 220px; object-fit: cover;" alt="صورة الأسير">
                             </a>
 
                             {{-- Card Body --}}
 
                             <div class="card-body">
-                                <h5 class="card-title mb-1">{{ $detainee->name }}</h5>
+                                <h5 class="card-title mb-1">{{ collect(explode(' ', $detainee->name))->take(3)->implode(' ') }}</h5>
                                 <p class="text-muted mb-1">
                                     <strong>الحالة : </strong> {{ __('status.' . $detainee->status) }}</p>
                                 <p class="text-muted"><strong>بتاريخ : </strong> {{ $detainee->detention_date }}
                                 </p>
-                            </div>
 
-                            <div class="card-footer bg-white text-end">
                                 <a href="{{ route('front.detainees.show', $detainee->id) }}"
                                    class="btn btn-primary btn-sm">
                                     <i class="fas fa-eye"></i> عرض التفاصيل
                                 </a>
                             </div>
+
                         </div>
                     </div>
                 @endforeach

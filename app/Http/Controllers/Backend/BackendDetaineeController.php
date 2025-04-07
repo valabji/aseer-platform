@@ -45,7 +45,6 @@ class BackendDetaineeController extends Controller
             'name' => 'nullable|string|max:255',
             'gender' => 'nullable|in:male,female',
             'birth_date' => 'nullable|date',
-            'national_id' => 'nullable|string|max:255',
             'location' => 'nullable|string|max:255',
             'detention_date' => 'nullable|date',
             'status' => 'nullable|in:detained,missing,released,martyr',
