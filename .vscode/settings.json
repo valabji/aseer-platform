@@ -1,0 +1,21 @@
+{
+    "editor.formatOnSave": true,
+    "[php]": {
+        "editor.formatOnSave": false
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit"
+    },
+    "files.eol": "\n",
+    "php.suggest.basic": false,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": "\\.php$",
+                "cmd": "${workspaceFolder}/vendor/bin/php-cs-fixer fix ${file} --config=${workspaceFolder}/.php-cs-fixer.dist.php"
+            }
+        ]
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "EditorConfig.EditorConfig",
+        "DEVSENSE.phptools-vscode",
+        "zobo.php-intellisense",
+        "mehedidracula.php-namespace-resolver",
+        "neilbrayfield.php-docblocker",
+        "emeraldwalk.RunOnSave"
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "PHP CS Fixer: Fix current file",
+            "type": "shell",
+            "command": "${workspaceFolder}/vendor/bin/php-cs-fixer fix ${file} --config=${workspaceFolder}/.php-cs-fixer.dist.php",
+            "presentation": {
+                "reveal": "never"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

@@ -9,7 +9,7 @@
 
 
 ### A humanitarian platform to document and manage data related to detainees, missing persons, unidentified individuals, and national initiatives during the war in Sudan.
-
+Live [Aseer Platform](https://aseer.net/)
 ## Features
 
 - ✅ Detainee management module with photos , details, and status
@@ -67,9 +67,9 @@ php artisan storage:link
 php artisan migrate:fresh
 php artisan db:seed
 
-# dont forget to start queuing and run schedule on the background 
+# don't forget to start queuing and run schedule on the background 
 php artisan queue:work
-php artisan schedule:run 
+php artisan schedule:work 
 ```
 
 ### Credentials
@@ -159,8 +159,39 @@ toastr.success('We do have the Kapua suite available.', 'Turtle Bay Resort', {ti
 </div>
 ```
 
+## Code Formatting
+
+This project uses automated PHP code formatting to maintain consistent code style across the codebase:
+
+1. **EditorConfig**: Basic editor settings are defined in `.editorconfig`
+2. **StyleCI**: PHP code style is enforced via StyleCI using the Laravel preset
+3. **PHP CS Fixer**: Local formatting is handled via PHP CS Fixer
+
+### Setup for VSCode
+
+1. Install the [EditorConfig extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+2. Install the [PHP CS Fixer extension](https://marketplace.visualstudio.com/items?itemName=junstyle.php-cs-fixer)
+3. VSCode settings are already configured in `.vscode/settings.json`
+
+### Setup for PhpStorm
+
+1. EditorConfig is supported natively
+2. For PHP CS Fixer:
+    - Go to Settings > Tools > External Tools
+    - Add PHP CS Fixer with Program: `$ProjectFileDir$/vendor/bin/php-cs-fixer` and Arguments: `fix "$FileDir$/$FileName$"`
+    - Configure File Watchers to run PHP CS Fixer on save
+
+### For Contributors
+
+All formatting configurations are committed to the repository and will be automatically applied when following the setup instructions.
+
 ### Author 
 https://digitalize.sd
 
 ### License
 The Laravel framework is open-sourced software licensed under the MIT license.
+
+
+<a href = "https://github.com/amolood/aseer-platform/contributors">
+  <img src = "https://contrib.rocks/image?repo=amolood/aseer-platform"/>
+</a>
