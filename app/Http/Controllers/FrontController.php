@@ -53,7 +53,11 @@ class FrontController extends Controller
     // عرض بيانات أسير مفصل
     public function detainee_show($id)
     {
-        $detainee = Detainee::where('is_approved', true)->findOrFail($id);
+        $detainee = Detainee::findOrFail($id);
+
+        if (! $detainee->is_approved && $detainee->user_id !== auth()->id()) {
+            abort(404);
+        }
         $page_image = $detainee->photos()->where('is_featured', true)->first()->url ?? null;
         if($detainee->status == 'detained') {
            $detaineeDesc = ' معتقل في ' . $detainee->location;
