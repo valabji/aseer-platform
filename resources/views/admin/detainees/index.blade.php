@@ -23,6 +23,7 @@
                         <select name="status" class="form-control select2">
                             <option value="">كل الحالات</option>
                             <option value="detained" @selected(request('status') === 'detained')>معتقل</option>
+                            <option value="kidnapped" @selected(request('status') === 'kidnapped')>مختطف</option>
                             <option value="missing" @selected(request('status') === 'missing')>مفقود</option>
                             <option value="released" @selected(request('status') === 'released')>مفرج عنه</option>
                             <option value="martyr" @selected(request('status') === 'martyr')>شهيد</option>
@@ -81,6 +82,7 @@
                             <th>الحالة</th>
                             <th>تاريخ الاعتقال</th>
                             <th>الموافقة</th>
+                            <th>بواسطة</th>
                             <th class="text-center">الإجراءات</th>
                         </tr>
                         </thead>
@@ -99,6 +101,7 @@
                                             <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
                                                 <option value="detained" @selected($detainee->status === 'detained')>معتقل</option>
                                                 <option value="missing" @selected($detainee->status === 'missing')>مفقود</option>
+                                                <option value="kidnapped" @selected($detainee->status === 'kidnapped')>مختطف</option>
                                                 <option value="released" @selected($detainee->status === 'released')>مفرج عنه</option>
                                                 <option value="martyr" @selected($detainee->status === 'martyr')>شهيد</option>
                                             </select>
@@ -124,12 +127,21 @@
                                         @endcan
                                     @endif
                                 </td>
+                                <td>
+                                    @if($detainee->user)
+                                        <a href="{{ route('admin.users.show', $detainee->user->id) }}" class="text-decoration-underline">
+                                            {{ $detainee->user->name }}
+                                        </a>
+                                    @else
+                                        <span class="text-muted">غير معروف</span>
+                                    @endif
+                                </td>
 
                                 {{-- 🔘 الإجراءات --}}
                                 <td class="text-center">
 
                                     @can('detainees-read')
-                                        <a href="{{ route('front.detainees.show', $detainee->id) }}" target="_blank" class="btn btn-sm btn-outline-secondary me-1">
+                                        <a href="{{ route('admin.detainees.show', $detainee->id) }}" target="_self" class="btn btn-sm btn-outline-secondary me-1">
                                             <i class="fas fa-eye"></i> عرض
                                         </a>
                                     @endcan

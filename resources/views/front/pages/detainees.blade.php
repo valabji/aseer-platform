@@ -1,19 +1,14 @@
 @extends('layouts.app', ['page_title' => "قائمة الأسرى"])
 
 @section('content')
-
     <div class="container py-5 pt-4">
 
         {{-- Page Header --}}
-        <div class="row align-items-center justify-content-between mb-4">
-            <div class="col-md-6">
-                <h2 class="mb-0 text-dark"><i class="fas fa-users me-2 text-primary"></i> قائمة الأسرى</h2>
-            </div>
-            <div class="col-md-3 text-md-end mt-3 mt-md-0">
-                <a href="{{ route('front.detainees.create') }}" class="btn btn-success">
-                    <i class="fas fa-plus me-1"></i> إضافة جديد
-                </a>
-            </div>
+        <div class="d-flex justify-content-between align-items-center flex-wrap mb-4 border-bottom pb-3">
+            <h2 class="mb-0 text-dark"><i class="fas fa-users me-2 text-primary"></i> قائمة الأسرى</h2>
+            <a href="{{ route('front.detainees.create') }}" class="btn btn-success rounded-pill">
+                <i class="fas fa-plus me-1"></i> إضافة جديد
+            </a>
         </div>
 
         {{-- Search Form --}}
@@ -21,15 +16,16 @@
             <div class="card-body">
                 <form method="GET">
                     <div class="row g-3 align-items-end">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label class="form-label">الاسم</label>
-                            <input type="text" name="search" value="{{ request('search') }}" class="form-control"
+                            <input type="text" name="search" value="{{ request('search') }}"
+                                   class="form-control select2 rounded-pill"
                                    placeholder="بحث بالاسم...">
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label class="form-label">الموقع</label>
-                            <select name="location" class="form-control select2-select">
+                            <select name="location" class="form-control select2 rounded-pill">
                                 <option value="">كل المواقع</option>
                                 @foreach($locations as $loc)
                                     <option
@@ -38,24 +34,25 @@
                             </select>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label class="form-label">الحالة</label>
-                            <select name="status" class="form-control select2-select">
+                            <select name="status" class="form-control select2 rounded-pill">
                                 <option value="">كل الحالات</option>
                                 <option value="detained" @selected(request('status') == 'detained')>معتقل</option>
+                                <option value="kidnapped" @selected(request('status') == 'kidnapped')>مختطف</option>
                                 <option value="missing" @selected(request('status') == 'missing')>مفقود</option>
                                 <option value="released" @selected(request('status') == 'released')>مُفرج عنه</option>
                                 <option value="martyr" @selected(request('status') == 'martyr')>شهيد</option>
                             </select>
                         </div>
 
-                        <div class="col-md-2 p-4">
-                            <button type="submit" class="btn btn-outline-success w-100">
+                        <div class="col-12 text-end mt-3">
+                            <button type="submit" class="btn btn-outline-success rounded-pill px-4 me-2">
                                 <i class="fas fa-search me-1"></i> بحث
                             </button>
-                            <button type="reset" class="btn btn-outline-danger w-100" onclick="this.form.reset();">
+                            <a href="{{ route('front.detainees') }}" class="btn btn-outline-danger rounded-pill px-4">
                                 <i class="fas fa-times me-1"></i> مسح
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </form>
@@ -67,36 +64,30 @@
             <div class="row g-4">
                 @foreach($detainees as $detainee)
                     <div class="col-12 col-sm-6 col-md-4 col-xl-3">
-                        <div class="card h-100 shadow-sm border-0">
+                        <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
                             @php
                                 $image = $detainee->photos->first()->path ?? 'images/default-avatar.png';
                                 if(str_contains($image,'images/default-avatar.png')){
                                     $image = 'images/default-avatar.png';
-                                    }else{
+                                } else {
                                     $image = 'storage/public/' . $image;
-                                    }
+                                }
                             @endphp
-                            {{-- Image --}}
                             <a href="{{ route('front.detainees.show', $detainee->id) }}" target="_blank">
-                                <img src="{{ asset($image) }}" class="card-img-top"
+                                <img src="{{ asset($image) }}" class="card-img-top img-fluid"
                                      style="height: 220px; object-fit: cover;" alt="صورة الأسير">
                             </a>
-
-                            {{-- Card Body --}}
-
-                            <div class="card-body">
-                                <h5 class="card-title mb-1">{{ collect(explode(' ', $detainee->name))->take(3)->implode(' ') }}</h5>
-                                <p class="text-muted mb-1">
-                                    <strong>الحالة : </strong> {{ __('status.' . $detainee->status) }}</p>
-                                <p class="text-muted"><strong>بتاريخ : </strong> {{ $detainee->detention_date }}
-                                </p>
-
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title fw-bold text-primary mb-2">{{ collect(explode(' ', $detainee->name))->take(3)->implode(' ') }}</h5>
+                                <p class="text-muted mb-1 small">
+                                    <strong>الحالة:</strong> {{ __('status.' . $detainee->status) }}</p>
+                                <p class="text-muted mb-3 small">
+                                    <strong>بتاريخ:</strong> {{ $detainee->detention_date }}</p>
                                 <a href="{{ route('front.detainees.show', $detainee->id) }}"
-                                   class="btn btn-primary btn-sm">
+                                   class="btn btn-outline-primary btn-sm mt-auto rounded-pill">
                                     <i class="fas fa-eye"></i> عرض التفاصيل
                                 </a>
                             </div>
-
                         </div>
                     </div>
                 @endforeach

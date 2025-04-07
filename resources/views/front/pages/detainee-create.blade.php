@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container py-5">
-        <h2 class="mb-4 text-center"><i class="fas fa-user-plus me-2"></i> إضافة أسير جديد</h2>
+        <h2 class="mb-4 text-center"><i class="fas fa-user-plus me-2"></i> إضافة أسير / مختطف / مفقود</h2>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -14,7 +14,7 @@
 
             {{-- القسم الأول: المعلومات الأساسية --}}
             <div class="mb-4">
-                <h5 class="text-muted border-bottom pb-2 mb-3"><i class="fas fa-info-circle me-2"></i> المعلومات الشخصية
+                <h5 class="text-danger border-bottom pb-2 mb-3"><i class="fas fa-info-circle me-2"></i> المعلومات الشخصية
                 </h5>
                 <div class="row g-3">
                     <div class="col-md-6">
@@ -40,15 +40,15 @@
 
             {{-- القسم الثاني: معلومات الاعتقال --}}
             <div class="mb-4">
-                <h5 class="text-muted border-bottom pb-2 mb-3"><i class="fas fa-lock me-2"></i> معلومات الاعتقال</h5>
+                <h5 class="text-danger border-bottom pb-2 mb-3"><i class="fas fa-lock me-2"></i> معلومات الاعتقال / الإختطاف / الأسر</h5>
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label class="form-label">مكان الاعتقال</label>
+                        <label class="form-label">المدينة التي اعتقل فيها</label>
                         <input type="text" name="location" class="form-control">
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label">تاريخ الاعتقال</label>
+                        <label class="form-label">تاريخ الاعتقال / الأسر / الإختطاف</label>
                         <input type="date" name="detention_date" class="form-control">
                     </div>
 
@@ -56,6 +56,7 @@
                         <label class="form-label">الحالة *</label>
                         <select name="status" class="form-control select2-select" required>
                             <option value="detained">معتقل</option>
+                            <option value="kidnapped">مختطف</option>
                             <option value="missing">مفقود</option>
                             <option value="released">مُفرج عنه</option>
                             <option value="martyr">شهيد</option>
@@ -84,7 +85,7 @@
 
             {{-- القسم الثالث: جهة الاتصال والملاحظات --}}
             <div class="mb-4">
-                <h5 class="text-muted border-bottom pb-2 mb-3"><i class="fas fa-user-friends me-2"></i> جهة الاتصال</h5>
+                <h5 class="text-danger border-bottom pb-2 mb-3"><i class="fas fa-user-friends me-2"></i> جهة الاتصال</h5>
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label">إسم صاحب البلاغ</label>
@@ -92,8 +93,8 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label">رقم هاتف صاحب البلاغ</label>
-                        <input type="text" name="family_contact_phone" class="form-control">
+                        <label class="form-label">رقم هاتف صاحب البلاغ بالمفتاح الدولي</label>
+                        <input type="text" placeholder="00249912740956" name="family_contact_phone" class="form-control">
                     </div>
 
                     <div class="col-md-6">
@@ -112,10 +113,10 @@
 
             <div class="mb-4">
                 <h5 class="border-bottom pb-2 mb-3" style="color: red;">
-                    <i class="fas fa-image me-2"></i> صور للأسير
+                    <i class="fas fa-image me-2"></i> صور للأسير(ضرورية)
                 </h5>
                 <div class="col-md-12">
-                    <input type="file" name="photos[]" class="form-control" multiple accept="image/*">
+                    <input required type="file" name="photos[]" class="form-control" multiple accept="image/*">
                     <small class="text-muted">يمكن رفع عدة صور دفعة واحدة</small>
                 </div>
             </div>

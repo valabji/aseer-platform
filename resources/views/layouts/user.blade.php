@@ -60,43 +60,6 @@
             </div>
         </div>
 
-
-     {{--    <div class="col-12 p-0 border-lg-top">
-            <div class="container p-0">
-                <div class="col-12 row user-menu">
-                    <div class="col-12 row d-flex px-1" style="width: 600px;margin: 0px auto;">
-                        <div class="user-menu d-flex align-items-center justify-content-center row text-center p-0" style="font-size:13px">
-                            <div class="col p-0 text-center">
-                                <a href="{{route('home')}}" style="color:inherit;padding: 5px 1px 10px;margin: 0px 2px;position: relative;" class="mobile-menu-link d-block font-1 font-lg-2 ">
-                                    <div class="p-0 text-center"><span class="fal fa-home  p-0 font-1 font-lg-2"></span></div>
-                                    <div class="p-0 text-center">الرئيسية
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col p-0 text-center">
-                                <a href="{{route('user.profile.edit')}}" style="color:inherit;padding: 5px 1px 10px;margin: 0px 2px;" class="mobile-menu-link d-block font-1 font-lg-2">
-                                    <div class="p-0 text-center"><span class="fal fa-wrench  p-0 font-1 font-lg-2"></span></div>
-                                    <div class="p-0 text-center">الإعدادات</div>
-                                </a>
-                            </div>
-                            <div class="col p-0 text-center">
-                                <a href="{{route('user.support')}}" style="color:inherit;padding: 5px 1px 10px;margin: 0px 2px;" class="mobile-menu-link d-block font-1 font-lg-2">
-                                    <div class="p-0 text-center"><span class="fal fa-comments-alt  p-0 font-1 font-lg-2"></span></div>
-                                    <div class="p-0 text-center">الدعم</div>
-                                </a>
-                            </div>
-                            <div class="col p-0 text-center">
-                                <a href="{{route('user.notifications')}}" style="color:inherit;padding: 5px 1px 10px;margin: 0px 2px;position: relative;" class="mobile-menu-link d-block font-1 font-lg-2 ">
-                                    <div class="p-0 text-center"><span class="fal fa-bells  p-0 font-1 font-lg-2"></span></div>
-                                    <div class="p-0 text-center">الاشعارات
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
     </div>
     <div class="col-12">
         <div class="container py-2 px-2">

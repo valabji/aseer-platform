@@ -25,14 +25,14 @@
 	                                <span style="display: inline-block;position: relative;top: 6px; " class="px-2 pt-0  float-end kufi"> </span>
 	                            </a>
 
-	                            
-	                            @else
-	                            
 
-	                        
-	                                <img src="https://manager.almadarisp.com/user/img/user.png" style="width: 45px;height: 45px;display: inline-block;border-radius: 50%!important;padding: 3px;" class="mx-auto" alt="صورة المستخدم">
+	                            @else
+
+
+
+	                                <img src="https://aseer.net/images/default/avatar.png" style="width: 45px;height: 45px;display: inline-block;border-radius: 50%!important;padding: 3px;" class="mx-auto" alt="صورة المستخدم">
 	                                <span style="display: inline-block;position: relative;top: 6px; " class="px-2 pt-0  float-end kufi"> </span>
-	                            
+
 
 	                            @endif
 	                        </div>
@@ -44,17 +44,17 @@
 
 	                                		@if($contact->user_id!=null)
 	                                    <a href="{{route('admin.users.index',['id'=>$contact->user_id])}}" class="d-inline-block text-center">
-	                                        
+
 	                                        <span style="font-size:13px;opacity: .7;font-weight: bold;color: var(--bg-color-0)" class="kufi">{{$contact->user->name}}</span>
 	                                    </a>
 
-	                                         
+
 	                                         @else
 
-	                             
-	                                        
+
+
 	                                        <span style="font-size:13px;opacity: .7;font-weight: bold;color: var(--bg-color-0)" class="kufi">{{$contact->name }}<br>{{ $contact->email}} <br>{{$contact->phone}}</span>
-	                                     
+
 
 	                                         @endif
 
@@ -71,16 +71,16 @@
 	                                    <div class="col-12 px-0">
 	                                    </div>
 	                                </div>
-	                            </div> 
+	                            </div>
 	                        </div>
 	                    </div>
 	                </div>
-	            </div> 
+	            </div>
         </div>
         <div class="col-12 p-0">
 
 
-         
+
         	@foreach($contact->replies as $reply)
 	            <div class="col-12 px-1 px-lg-3 row py-2 message" style="direction: rtl;" id="{{$reply->id}}">
 	                <div class="col-12 col-md-10 col-lg-9 col-xl-6 p-2 row rounded-2" style="direction: rtl;background:#d7eeff;">
@@ -97,7 +97,7 @@
 	                            <div class="col-12 px-0 row">
 	                                <div class="col-7 px-0">
 	                                    <a href="{{route('admin.users.index',['id'=>$reply->user_id])}}" class="d-inline-block text-center">
-	                                        
+
 	                                        <span style="font-size:13px;opacity: .7;font-weight: bold;color: var(--bg-color-0)" class="kufi">{{$reply->user->name}}</span></a>
 
 	                                         </div>
@@ -113,7 +113,7 @@
 	                                    <div class="col-12 px-0">
 	                                    </div>
 	                                </div>
-	                            </div> 
+	                            </div>
 	                        </div>
 	                    </div>
 	                    @if($reply->files()->count() !=0)

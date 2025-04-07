@@ -42,4 +42,19 @@ class Detainee extends Model
         return $this->belongsToMany(User::class, 'detainee_followers')->withTimestamps();
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function seenReports()
+    {
+        return $this->hasMany(DetaineeSeenReport::class);
+    }
+
+    public function errorReports()
+    {
+        return $this->hasMany(DetaineeErrorReport::class);
+    }
+
 }

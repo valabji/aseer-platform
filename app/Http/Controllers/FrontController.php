@@ -24,12 +24,19 @@ class FrontController extends Controller
     // عرض الأسرى المعتمدين فقط
     public function detainees(Request $request)
     {
+        $allStatuses = Detainee::select('status', \DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->pluck('total', 'status')
+            ->toArray();
+
+        $total = Detainee::count();
+
         $detainees = Detainee::where('is_approved', true)
             ->when($request->search, fn($q) => $q->where('name', 'like', '%' . $request->search . '%'))
             ->when($request->location, fn($q) => $q->where('location', $request->location))
             ->when($request->status, fn($q) => $q->where('status', $request->status))
             ->when($request->date, fn($q) => $q->whereDate('detention_date', $request->date))
-//            ->where('status', '!=', 'martyr')
+            //->where('status', '!=', 'martyr')
             ->with('photos')
             ->orderByDesc('id')
             ->paginate(20);
@@ -39,7 +46,7 @@ class FrontController extends Controller
             ->distinct()
             ->pluck('location');
 
-        return view('front.pages.detainees', compact('detainees', 'locations'));
+        return view('front.pages.detainees', compact('detainees', 'locations', 'allStatuses', 'total'));
     }
 
 
@@ -47,7 +54,25 @@ class FrontController extends Controller
     public function detainee_show($id)
     {
         $detainee = Detainee::where('is_approved', true)->findOrFail($id);
-
+        $page_image = $detainee->photos()->where('is_featured', true)->first()->url ?? null;
+        if($detainee->status == 'detained') {
+           $detaineeDesc = ' معتقل في ' . $detainee->location;
+        } elseif ($detainee->status == 'missing') {
+            $detaineeDesc = ' مفقود في ' . $detainee->location;
+        } elseif ($detainee->status == 'kidnapped') {
+            $detaineeDesc = ' مختطف في ' . $detainee->location;
+        } elseif ($detainee->status == 'released') {
+            $detaineeDesc = ' محرر في ' . $detainee->location;
+        } elseif ($detainee->status == 'forced_disappearance') {
+            $detaineeDesc = ' مختفي قسريًا في ' . $detainee->location;
+        }  elseif ($detainee->status == 'missing') {
+            $detaineeDesc = ' مفقود في ' . $detainee->location;
+        } elseif ($detainee->status == 'detained') {
+            $detaineeDesc = 'أسير معتقل في ' . $detainee->location;
+        } else {
+            $detaineeDesc = ' أسير في ' . $detainee->location;
+        };
+        $page_description = $detaineeDesc . ' منذ ' . $detainee->detention_date;
 
         // جلب أسرى مشابهين بنفس الموقع أو الحالة
         $relatedDetainees = Detainee::where('is_approved', true)
@@ -63,7 +88,7 @@ class FrontController extends Controller
         $photos = DetaineePhoto::where('detainee_id', $detainee->id)->get();
 
         $detainee = Detainee::where('is_approved', true)->findOrFail($id);
-        return view('front.pages.detainee-show', compact('detainee', 'relatedDetainees', 'photos'));
+        return view('front.pages.detainee-show', compact('detainee', 'relatedDetainees', 'photos','page_image','page_description'));
     }
 
     // نموذج إرسال بيانات أسير من قبل الزوار
@@ -85,7 +110,7 @@ class FrontController extends Controller
             'birth_date' => 'nullable|date',
             'location' => 'nullable|string|max:255',
             'detention_date' => 'nullable|date',
-            'status' => 'required|in:detained,missing,released,martyr',
+            'status' => 'required|in:detained,missing,released,martyr,kidnapped',
             'detaining_authority' => 'nullable|string|max:255',
             'prison_name' => 'nullable|string|max:255',
             'is_forced_disappearance' => 'nullable|boolean',
@@ -93,9 +118,11 @@ class FrontController extends Controller
             'family_contact_phone' => 'nullable|string|max:255',
             'notes' => 'nullable|string',
             'source' => 'nullable|string|max:255',
-            'photos' => 'nullable|array',
-            'photos.*' => 'image|max:2048',
+            'photos' => 'required|array',
+            'photos.*' => 'image|max:8048',
         ]);
+
+        $data['detaining_authority'] = str_replace('مليشيا','',$request->detaining_authority);
 
         $data['is_approved'] = false;
 
@@ -129,6 +156,43 @@ class FrontController extends Controller
             return redirect()->back()->with('error', 'يجب تسجيل الدخول لإضافة أسير.');
         }
     }
+
+
+    public function reportSeen(Request $request, Detainee $detainee)
+    {
+        $request->validate([
+            'location' => 'required|string|max:255',
+            'details' => 'nullable|string',
+            'contact' => 'nullable|string|max:255',
+        ]);
+
+        $detainee->seenReports()->create([
+            'user_id' => auth()->id(),
+            'location' => $request->location,
+            'details' => $request->details,
+            'contact' => $request->contact,
+        ]);
+
+        return back()->with('success', 'تم إرسال البلاغ، شكرًا لمساهمتك.');
+    }
+
+    public function reportError(Request $request, Detainee $detainee)
+    {
+        $request->validate([
+            'details' => 'required|string',
+            'contact_info' => 'nullable|string|max:255',
+        ]);
+
+        $detainee->errorReports()->create([
+            'user_id' => auth()->id(),
+            'details' => $request->details,
+            'contact_info' => $request->contact_info,
+        ]);
+
+        return back()->with('success', 'تم إرسال الملاحظة، سيتم مراجعتها من الإدارة.');
+    }
+
+
 
 
 

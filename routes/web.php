@@ -55,10 +55,18 @@ Route::middleware('auth')->group(function () {
 // عرض قائمة الأسرى
 Route::get('/detainees', [FrontController::class, 'detainees'])->name('front.detainees');
 
-// نموذج إضافة أسير من قبل الزوار
+// detainee with auth
+
 Route::get('/detainees/create', [FrontController::class, 'detainee_create'])->middleware('auth')->name('front.detainees.create');
+
 // عرض بيانات أسير مفصلة
 Route::get('/detainees/{id}', [FrontController::class, 'detainee_show'])->name('front.detainees.show');
+
+Route::post('detainees/{detainee}/seen', [FrontController::class, 'reportSeen'])->name('front.detainees.seen');
+Route::post('detainees/{detainee}/report', [FrontController::class, 'reportError'])->name('front.detainees.report');
+
+
+
 // تخزين بيانات الأسير المُرسل من الزائر
 
 Route::post('/detainees', [FrontController::class, 'detainee_store'])->name('front.detainees.store');
@@ -114,6 +122,8 @@ Route::prefix('admin')->middleware(['auth', 'ActiveAccount'])->name('admin.')->g
 
     Route::get('/', [BackendAdminController::class, 'index'])->name('index');
     Route::middleware('auth')->group(function () {
+        Route::get('/detainees/{detainee}', [BackendDetaineeController::class, 'show'])->name('detainees.show');
+
         Route::resource('announcements', BackendAnnouncementController::class);
         Route::resource('files', BackendFileController::class);
         Route::post('contacts/resolve', [BackendContactController::class, 'resolve'])->name('contacts.resolve');

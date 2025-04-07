@@ -3,12 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">  
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('seo.index')
-    
-    
-
-
     {!!$settings['header_code']!!}
     @livewireStyles
     @if(auth()->check())
@@ -44,7 +40,7 @@
             --main-color-flexable: #15202b;
             --scroll-bar-color: #505050;
         }
-        
+
     </style>
     @yield('styles')
 </head>
@@ -97,11 +93,11 @@
             $('.notifications-container').empty();
             $('.notifications-container').append(msg.response);
             $('.notifications-container a').on('click', function() { window.location.href = $(this).attr('href'); });
-        } 
+        }
         function get_notifications() {
             $.ajax({
                 method: "GET",
-                url: "{{route('admin.notifications.ajax')}}", 
+                url: "{{route('admin.notifications.ajax')}}",
                 success: function(data, textStatus, xhr) {
 
                     favicon.badge(data.notifications.response.count_unseen_notifications);
@@ -109,10 +105,10 @@
                     if (data.alert) {
                         var audio = new Audio('{{asset("/sounds/notification.wav")}}');
                         audio.play();
-                    }  
-                    append_notification_notifications(data.notifications.response); 
+                    }
+                    append_notification_notifications(data.notifications.response);
                     if (data.notifications.response.count_unseen_notifications > 0) {
-                        $('title').text('(' + parseInt(data.notifications.response.count_unseen_notifications) + ')' + " " +  
+                        $('title').text('(' + parseInt(data.notifications.response.count_unseen_notifications) + ')' + " " +
                         get_website_title());
 
                     } else {
@@ -120,17 +116,17 @@
                     }
                 }
             });
-        } 
+        }
         window.focused = 25000;
         window.onfocus = function() {
-            get_notifications(); 
+            get_notifications();
             window.focused = 25000;
         };
         window.onblur = function() {
             window.focused = 60000;
-        }; 
+        };
         function get_nots() {
-            setTimeout(function() { 
+            setTimeout(function() {
                 get_notifications();
                 get_nots();
             }, window.focused);

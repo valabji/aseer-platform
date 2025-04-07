@@ -56,6 +56,7 @@
                         <label class="form-label">الحالة *</label>
                         <select name="status" class="form-control select2-select" required>
                             <option value="detained" @selected($detainee->status == 'detained')>معتقل</option>
+                            <option value="kidnapped" @selected($detainee->status == 'kidnapped')>مختطف</option>
                             <option value="missing" @selected($detainee->status == 'missing')>مفقود</option>
                             <option value="released" @selected($detainee->status == 'released')>مُفرج عنه</option>
                             <option value="martyr" @selected($detainee->status == 'martyr')>شهيد</option>

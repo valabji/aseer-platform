@@ -24,7 +24,7 @@ class BackendDetaineeController extends Controller
         // Notify followers about the status change
         $oldStatus = $detainee->getOriginal('status');
         $request->validate([
-            'status' => 'required|in:detained,missing,released,martyr',
+            'status' => 'required|in:detained,missing,released,martyr,kidnapped',
         ]);
 
         $detainee->update(['status' => $request->status]);
@@ -32,6 +32,12 @@ class BackendDetaineeController extends Controller
         toastr()->success('تم تحديث حالة الأسير بنجاح');
         return back();
     }
+
+    public function show(Detainee $detainee)
+    {
+        return view('admin.detainees.show', compact('detainee'));
+    }
+
 
     public function edit(Detainee $detainee)
     {
@@ -47,7 +53,7 @@ class BackendDetaineeController extends Controller
             'birth_date' => 'nullable|date',
             'location' => 'nullable|string|max:255',
             'detention_date' => 'nullable|date',
-            'status' => 'nullable|in:detained,missing,released,martyr',
+            'status' => 'nullable|in:detained,missing,released,martyr,kidnapped',
             'detaining_authority' => 'nullable|string|max:255',
             'prison_name' => 'nullable|string|max:255',
             'is_forced_disappearance' => 'nullable|boolean',
@@ -153,7 +159,7 @@ class BackendDetaineeController extends Controller
             ->when($request->location, fn($q) => $q->where('location', 'like', '%' . $request->location . '%'))
             ->when($request->date_from, fn($q) => $q->whereDate('detention_date', '>=', $request->date_from))
             ->when($request->date_to, fn($q) => $q->whereDate('detention_date', '<=', $request->date_to))
-            ->orderByDesc('id')
+            ->orderByDesc('name')
             ->paginate(20);
 
         return view('admin.detainees.index', compact('detainees', 'locations'));

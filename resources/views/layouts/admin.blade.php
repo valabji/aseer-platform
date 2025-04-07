@@ -217,6 +217,13 @@
                             </div>
                             <div style="width: calc(100% - 50px)" class="px-2 item-container-title">
                                 الأسرى
+                                @php
+                                    $notApproved = \App\Models\Detainee::where('is_approved',0)->count();
+                                @endphp
+                                @if($notApproved)
+                                    <span style="background: #d34339;border-radius: 2px;color:var(--background-1);display: inline-block;font-size: 11px;text-align: center;padding: 1px 5px;margin: 0px 8px">{{$notApproved}}</span>
+
+                                @endif
                             </div>
                         </div>
                     </a>

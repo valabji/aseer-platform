@@ -7,7 +7,7 @@
 </style>
 <div class="col-12 p-3">
 	<div class="col-12 col-lg-12 p-0 main-box">
-	 
+
 		<div class="col-12 px-0">
 			<div class="col-12 p-0 row">
 				<div class="col-12 col-lg-4 py-3 px-3">
@@ -28,8 +28,8 @@
 		</div>
 		<div class="col-12 p-3" style="overflow:auto">
 			<div class="col-12 p-0" style="min-width:1100px;">
-				
-			
+
+
 			<table class="table table-bordered  table-hover">
 				<thead>
 					<tr>
@@ -41,21 +41,21 @@
 						<th>محتوى التذكرة</th>
 						<th>تحكم</th>
 					</tr>
-				</thead>  
+				</thead>
 				<tbody>
 					@foreach($contacts as $contact)
-					<tr 
+					<tr
 					id="ticket_{{$contact->id}}"
-					class="@if($contact->status=="DONE") ticket-resolved @endif" 
+					class="@if($contact->status=="DONE") ticket-resolved @endif"
 					 >
 						<td>{{$contact->id}}</td>
 						@can('contacts-update')
 						<td scope="col" style="width:30px;">
-		      
+
 					      	<div class="form-switch">
 							  <input class="form-check-input toggle-contact-resolving" type="checkbox" id="flexSwitchCheckDefault" style="width:40px;height: 21px;" {{$contact->status=="DONE"?"checked":""}} data-id="{{$contact->id}}">
 							</div>
-						 
+
 					      </td>
 					     @endcan
 						<td>
@@ -65,13 +65,13 @@
 	                        	<a href="{{route('admin.users.show',$contact->user)}}" class="d-inline-block text-center">
 	                                <img src="{{$contact->user->getUserAvatar()}}" style="width: 45px;height: 45px;display: inline-block;border-radius: 50%!important;padding: 3px;" class="mx-auto" alt="صورة المستخدم">
 	                                <span style="display: inline-block;position: relative;top: 6px; " class="px-2 pt-0  text-start kufi">{{$contact->user->name}}</span>
-	                            </a> 
+	                            </a>
 	                            @else
-	                            
-	                                <img src="https://manager.almadarisp.com/user/img/user.png" style="width: 45px;height: 45px;display: inline-block;border-radius: 50%!important;padding: 3px;" class="mx-auto" alt="صورة المستخدم">
+
+	                                <img src="https://aseer.net/images/default/avatar.png" style="width: 45px;height: 45px;display: inline-block;border-radius: 50%!important;padding: 3px;" class="mx-auto" alt="صورة المستخدم">
 	                                <span style="display: inline-block;position: relative;top: 6px; " class="px-2 pt-0  text-start kufi">{{$contact->name}}<br>{{$contact->email}}<br>{{$contact->phone}}</span>
 
-	                   
+
 	                            @endif
 						</td>
 						<td>{{mb_strimwidth($contact->message,0,80,'...')}}
@@ -86,14 +86,14 @@
 								}}
 								<br>
 								{{
-									mb_strimwidth($last_reply->content,0,80,'...') 
+									mb_strimwidth($last_reply->content,0,80,'...')
 								}}
 							@else
 							{{$contact->name}}
 							@endif
-							  
+
 						</td>
-					 
+
 						<td style="width: 180px;">
 							@can('contacts-read',$contact)
 							<a href="{{route('admin.contacts.show',$contact)}}">
@@ -132,7 +132,7 @@
 		  url: "{{route('admin.contacts.resolve')}}",
 		  data: { _token: "{{csrf_token()}}", id: id }
 		}).done(function(res){
-			if(res.status=="DONE"){ 
+			if(res.status=="DONE"){
 				$('#ticket_'+id).addClass('ticket-resolved');
 			}
 			else{

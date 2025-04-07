@@ -18,13 +18,13 @@
                     <ul class="dropdown-menu dropdown-menu-end text-end">
                         <li>
                             <a class="dropdown-item" target="_blank"
-                               href="https://www.facebook/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}">
+                               href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}">
                                 <i class="fab fa-facebook me-2 text-primary"></i> فيسبوك
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item" target="_blank"
-                               href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}&text=قصة أسير">
+                               href="https://x.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}&text=قصة أسير">
                                 <i class="fab fa-twitter me-2 text-info"></i>  تويتر
                             </a>
                         </li>
@@ -49,20 +49,24 @@
                 </div>
 
                 {{-- Other buttons --}}
-{{--                @if($detainee->status !== 'martyr')--}}
-{{--                    <button class="btn btn-outline-warning rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#seenModal">--}}
-{{--                        <i class="fas fa-eye me-2"></i> رأيت هذا الشخص --}}
-{{--                    </button>--}}
-{{--                @endif--}}
-{{--                <button class="btn btn-outline-danger rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#reportModal">--}}
-{{--                    <i class="fas fa-flag me-2"></i> تبليغ عن خطأ--}}
-{{--                </button>--}}
+                @if($detainee->status !== 'martyr')
+                    <button class="btn btn-outline-warning rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#seenModal">
+                        <i class="fas fa-eye me-2"></i> رأيت هذا الشخص
+                    </button>
+                @endif
+                <button class="btn btn-outline-danger rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#reportModal">
+                    <i class="fas fa-flag me-2"></i> تبليغ عن خطأ
+                </button>
             </div>
         </div>
 
         {{-- Featured Photo --}}
-        @php $featured = $detainee->photos()->featured()->first(); @endphp
-        @if($featured)
+        @php
+            $image = $detainee->photos()->featured()->first()->url ?? ($detainee->photos()->first()->url ?? asset('images/default-avatar.png'));
+            $featured = $detainee->photos()->featured()->first();
+        @endphp
+
+    @if($featured)
             <div class="mb-4 text-center">
                 <a href="{{ $featured->url }}" data-fancybox="detainee-photo" data-caption="{{ $detainee->name }}">
                     <img src="{{ $featured->url }}" class="img-fluid rounded shadow"
@@ -263,6 +267,84 @@
             </section>
         @endif
     </div>
+
+    {{-- Modal: رأيت هذا الشخص --}}
+    <form method="POST" action="{{ route('front.detainees.seen', $detainee->id) }}">
+        @csrf
+        <div class="modal fade" id="seenModal" tabindex="-1" aria-labelledby="seenModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-4">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="seenModalLabel">رأيت هذا الشخص</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">مكان الرؤية</label>
+                            <input type="text" name="location" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">تفاصيل إضافية (اختياري)</label>
+                            <textarea name="details" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">معلومات تواصل (اختياري)</label>
+                            <input type="text" name="contact" class="form-control">
+                        </div>
+
+                        <div class="text-center">
+                            <button type="button" class="btn btn-outline-danger px-4" data-bs-dismiss="modal">
+                                <i class="fas fa-times me-1"></i> إلغاء
+                            </button>
+                            <button type="submit" class="btn btn-success px-4">
+                                <i class="fas fa-paper-plane me-1"></i> إرسال
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+    {{-- Modal: تبليغ عن خطأ --}}
+    <form method="POST" action="{{ route('front.detainees.report', $detainee->id) }}">
+        @csrf
+        <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-4">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="reportModalLabel">تبليغ عن خطأ</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">تفاصيل الخطأ</label>
+                            <textarea name="details" class="form-control" rows="4" placeholder="اكتب ملاحظاتك هنا..." required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">معلومات تواصل (اختياري)</label>
+                            <input type="text" name="contact_info" class="form-control" placeholder="رقم هاتف أو بريد إلكتروني">
+                        </div>
+
+                        <div class="text-center">
+                            <button type="button" class="btn btn-outline-danger px-4" data-bs-dismiss="modal">
+                                <i class="fas fa-times me-1"></i> إلغاء
+                            </button>
+                            <button type="submit" class="btn btn-success px-4">
+                                <i class="fas fa-paper-plane me-1"></i> إرسال التبليغ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
 
 
 
