@@ -57,4 +57,9 @@ class Detainee extends Model
         return $this->hasMany(DetaineeErrorReport::class);
     }
 
+    public function scopeApproved($query)
+    {
+        return $query->where('is_approved', 1);
+    }
+
 }

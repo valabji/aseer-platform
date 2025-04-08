@@ -2,6 +2,27 @@
 
 @section('content')
     <div class="container py-5 pt-4">
+        @php
+            $statusInfo = [
+                'detained' => ['label' => 'معتقل',  'color' => 'dark'],
+                'kidnapped' => ['label' => 'مختطف', 'color' => 'dark'],
+                'missing' => ['label' => 'مفقود',  'color' => 'dark'],
+                'released' => ['label' => 'مفرج عنه',  'color' => 'dark'],
+                'martyr' => ['label' => 'شهيد',  'color' => 'danger'],
+                'total' => ['label' => 'الكل',  'color' => 'dark'],
+            ];
+        @endphp
+        <i class="fa-light fa-user-secret"></i>
+        <div class="row g-3 mb-4">
+            @foreach($statusInfo as $key => $info)
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="p-3 text-center bg-{{$info['color']}} border shadow-sm rounded-3">
+                        <div class="fw-bold h1 text-white text-center">{{ $allStatuses[$key] ?? 0 }}</div>
+                        <small class="text-white">{{ $info['label'] }}</small>
+                    </div>
+                </div>
+            @endforeach
+        </div>
 
         {{-- Page Header --}}
         <div class="d-flex justify-content-between align-items-center flex-wrap mb-4 border-bottom pb-3">

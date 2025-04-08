@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Detainee;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use App\Models\ContactReply;
@@ -10,7 +11,13 @@ class FrontendProfileController extends Controller
 {
     public function dashboard(Request $request)
     {
-        return view('front.user.index');
+        $detainees = Detainee::where('user_id', auth()->id())
+            ->withCount(['seenReports', 'errorReports', 'followers'])
+            ->with(['photos']) // لو عايز الصور
+            ->latest()
+            ->paginate(12);
+
+        return view('front.user.index', compact('detainees'));
     }
     public function balances(Request $request)
     {
@@ -39,7 +46,17 @@ class FrontendProfileController extends Controller
         }
         return redirect()->route('user.ticket',$ticket);
     }
-    
+
+    public function edit($id)
+    {
+        $detainee = Detainee::where('user_id', auth()->id())->findOrFail($id);
+
+        return view('front.user.edit', compact('detainee'));
+    }
+
+
+
+
     public function ticket(Request $request,Contact $ticket)
     {
         return view('front.user.ticket',compact('ticket'));
@@ -60,7 +77,7 @@ class FrontendProfileController extends Controller
             'message'=>"تم ارسال رسالتك بنجاح",
             'alert-type'=>"warning"
         ]);
-        
+
     }
     public function notifications(Request $request)
     {

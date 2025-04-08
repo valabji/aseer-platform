@@ -97,6 +97,12 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
 
 Route::prefix('dashboard')->middleware(['auth', 'ActiveAccount', 'verified'])->name('user.')->group(function () {
+    Route::get('/detainees/index', [FrontendProfileController::class, 'dashboard'])->name('detainees.index');
+    Route::get('/detainees/{detainee}', [FrontendProfileController::class, 'detainee_show'])->name('detainees.show');
+    Route::get('/detainees/{detainee}/edit', [FrontendProfileController::class, 'edit'])->name('detainees.edit');
+    Route::put('/detainees/{detainee}', [FrontendProfileController::class, 'update'])->name('detainees.update');
+
+
     Route::get('/', [FrontendProfileController::class, 'dashboard'])->name('dashboard');
     Route::get('/support', [FrontendProfileController::class, 'support'])->name('support');
     Route::get('/support/create-ticket', [FrontendProfileController::class, 'create_ticket'])->name('create-ticket');
