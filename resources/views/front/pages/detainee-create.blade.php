@@ -76,6 +76,7 @@
                     <div class="col-md-6">
                         <label class="form-label">اسم السجن</label>
                         <input type="text" name="prison_name" class="form-control">
+                        <small class="text-muted">إذا كان غير معروف دعه فارغاً</small>
                     </div>
 
                     <div class="col-md-6">
@@ -95,11 +96,12 @@
                     <div class="col-md-6">
                         <label class="form-label">إسم صاحب البلاغ</label>
                         <input type="text" name="family_contact_name" class="form-control">
+                        <small>اسمك رباعي</small>
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">رقم هاتف صاحب البلاغ بالمفتاح الدولي</label>
-                        <input type="text" placeholder="00249912740956" name="family_contact_phone" class="form-control">
+                        <input type="text" placeholder="249912740956" name="family_contact_phone" class="form-control">
                     </div>
 
                     <div class="col-md-6">
