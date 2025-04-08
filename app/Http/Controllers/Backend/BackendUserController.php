@@ -22,7 +22,7 @@ class BackendUserController extends Controller
 
     public function index(Request $request)
     {
-        
+
         $users =  User::where(function($q)use($request){
             if($request->id!=null)
                 $q->where('id',$request->id);
@@ -31,7 +31,7 @@ class BackendUserController extends Controller
         })->withCount(['logs','articles','contacts','comments'])->with(['roles'])->orderBy('last_activity','DESC')->orderBy('id','DESC')->paginate();
 
         return view('admin.users.index',compact('users'));
-        
+
     }
 
     /**
@@ -84,8 +84,8 @@ class BackendUserController extends Controller
 
         toastr()->success('تم إضافة المستخدم بنجاح','عملية ناجحة');
         return redirect()->route('admin.users.index');
-            
-        
+
+
     }
 
     /**
@@ -134,15 +134,19 @@ class BackendUserController extends Controller
             "bio"=>$request->bio,
             "blocked"=>$request->blocked,
             "email"=>$request->email,
-            
+
         ]);
-        if(auth()->user()->can('user-roles-update')){
+        if (auth()->user()->can('user-roles-update')) {
             $request->validate([
-                'roles'=>"required|array",
-                'roles.*'=>"required|exists:roles,id",
+                'roles' => "required|array",
+                'roles.*' => "required|exists:roles,id",
             ]);
-            $user->syncRoles($request->roles);
+
+            $roleNames = \Spatie\Permission\Models\Role::whereIn('id', $request->roles)->pluck('name')->toArray();
+
+            $user->syncRoles($roleNames);
         }
+
 
         if($request->password!=null){
             $user->update([

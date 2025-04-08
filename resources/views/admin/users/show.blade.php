@@ -1,22 +1,15 @@
 @extends('layouts.admin')
 @section('content')
-{{-- <div class=" p-3">
-    <x-bread-crumb :breads="[
-        ['url' => url('/admin') , 'title' => 'لوحة التحكم' , 'isactive' => false],
-        ['url' => route('admin.users.index') , 'title' => 'المستخدمين' , 'isactive' => false],
-        ['url' => '#' , 'title' =>  $user->name, 'isactive' => true],
-    ]">
-    </x-bread-crumb> 
-</div> --}}
+
 <div class="col-12 py-5 rounded-2" style="text-align: center;background: var(--background-1);margin-top: -5px;">
     <div class="col-12" style="display:flex;justify-content: center;">
         <img src="{{$user->getUserAvatar()}}" style="width:130px;height: 130px;border-radius: 50%;">
     </div>
     <div class="col-12 p-2 text-center" style="overflow:auto;">
         {{$user->id}} <br>
-        {{$user->name}} <br>
+        {{$user->name}}<br>
         {{$user->email}}<br>
-        {{$user->phone}}<br>
+        {{$user->phone}} {!! $user->hasVerifiedPhone() ? '<span class="text-success">✅</span>' : '<span class="text-danger">❌</span>' !!}<br>
     </div>
 </div>
 <div class="col-12 py-0 px-3 row">
@@ -88,7 +81,7 @@
                             </div>
                         </a>
                     </div>
-                  
+
                 </div>
             </div>
         </div>

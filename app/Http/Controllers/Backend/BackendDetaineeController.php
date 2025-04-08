@@ -171,6 +171,20 @@ class BackendDetaineeController extends Controller
         toastr()->success('تمت الموافقة على الأسير بنجاح');
         return back();
     }
+
+    public function unapprove($id)
+    {
+        $detainee = Detainee::findOrFail($id);
+        $detainee->is_approved = false;
+        $detainee->save();
+
+        if ($detainee->user) {
+            $detainee->user->notify(new DetaineeStatusChanged($detainee, 'unapproved'));
+        }
+
+        return redirect()->back()->with('success', 'تم إلغاء الموافقة على الأسير.');
+    }
+
     public function deletePhoto(Request $request)
     {
         $request->validate([

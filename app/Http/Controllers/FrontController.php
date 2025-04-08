@@ -24,19 +24,21 @@ class FrontController extends Controller
     // عرض الأسرى المعتمدين فقط
     public function detainees(Request $request)
     {
-        $allStatuses = Detainee::select('status', \DB::raw('count(*) as total'))
+        $allStatuses = Detainee::where('is_approved', true)
+            ->select('status', \DB::raw('count(*) as total'))
             ->groupBy('status')
             ->pluck('total', 'status')
             ->toArray();
 
-        $total = Detainee::count();
+        $total = array_sum($allStatuses);
+
+        // دمج total داخل المصفوفة نفسها
+        $allStatuses['total'] = $total;
 
         $detainees = Detainee::where('is_approved', true)
             ->when($request->search, fn($q) => $q->where('name', 'like', '%' . $request->search . '%'))
             ->when($request->location, fn($q) => $q->where('location', $request->location))
             ->when($request->status, fn($q) => $q->where('status', $request->status))
-            ->when($request->date, fn($q) => $q->whereDate('detention_date', $request->date))
-            //->where('status', '!=', 'martyr')
             ->with('photos')
             ->orderByDesc('id')
             ->paginate(20);
@@ -46,7 +48,7 @@ class FrontController extends Controller
             ->distinct()
             ->pluck('location');
 
-        return view('front.pages.detainees', compact('detainees', 'locations', 'allStatuses', 'total'));
+        return view('front.pages.detainees', compact('detainees', 'locations', 'allStatuses'));
     }
 
 

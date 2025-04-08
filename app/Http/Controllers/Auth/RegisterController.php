@@ -53,8 +53,8 @@ class RegisterController extends Controller
 //        if(\MainHelper::recaptcha($data['recaptcha'])<0.8)abort(401);
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'string', 'email:rfc,dns', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
             'phone' => ['required', 'string', 'regex:/^(\+|00)?[0-9]{7,15}$/'],
         ]);
     }
@@ -68,11 +68,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // Normalize the phone number
         $data['phone'] = str_replace(['+', ' '], '', $data['phone']);
         if (str_starts_with($data['phone'], '00')) {
             $data['phone'] = substr($data['phone'], 2);
+        }elseif (str_starts_with($data['phone'], '0')) {
+            $data['phone'] = substr($data['phone'], 1);
         }
+        $data['phone'] = $data['country_code'] . $data['phone'];
+        unset($data['country_code']);
 
         // Create user
         $user = User::create([
@@ -82,5 +85,17 @@ class RegisterController extends Controller
             'phone' => $data['phone']
         ]);
         return $user;
+    }
+
+    /**
+     * Handle post-registration logic.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function registered(\Illuminate\Http\Request $request, $user)
+    {
+        return redirect()->route('phone.verify');
     }
 }

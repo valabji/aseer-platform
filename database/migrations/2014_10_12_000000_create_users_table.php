@@ -22,12 +22,13 @@ class CreateUsersTable extends Migration
             $table->integer('blocked')->default(0);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('phone_verified_at')->nullable();
             $table->timestamp('last_activity')->nullable()->index();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
-        
+
     }
 
     /**

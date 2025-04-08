@@ -67,6 +67,16 @@ class User extends Authenticatable implements HasMedia
             return env("STORAGE_URL").'/'.\MainHelper::get_conversion($this->avatar,$type);
     }
 
+    public function hasVerifiedPhone()
+    {
+        if (!$this->phone_verified_at)
+            return false;
+        if ($this->phone == null)
+            return false;
+        else
+            return true;
+    }
+
     public function scopeWithoutTimestamps()
     {
         $this->timestamps = false;

@@ -115,7 +115,13 @@
 
                                 <td>
                                     @if($detainee->is_approved)
-                                        <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i> معتمد</span>
+                                        <form method="POST" action="{{ route('admin.detainees.unapprove', $detainee->id) }}">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button class="btn btn-sm btn-danger">
+                                                <i class="fas fa-times-circle me-1"></i> إلغاء
+                                            </button>
+                                        </form>
                                     @else
                                         @can('detainees-update')
                                             <form method="POST" action="{{ route('admin.detainees.approve', $detainee->id) }}">
@@ -127,6 +133,7 @@
                                         @endcan
                                     @endif
                                 </td>
+
                                 <td>
                                     @if($detainee->user)
                                         <a href="{{ route('admin.users.show', $detainee->user->id) }}" class="text-decoration-underline">

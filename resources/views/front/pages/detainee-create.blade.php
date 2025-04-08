@@ -18,7 +18,7 @@
                 </h5>
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label class="form-label">الاسم الكامل *</label>
+                        <label class="form-label">الاسم رباعي *</label>
                         <input type="text" name="name" class="form-control" required>
                     </div>
 
@@ -61,6 +61,11 @@
                             <option value="released">مُفرج عنه</option>
                             <option value="martyr">شهيد</option>
                         </select>
+                        <ul class="text-danger">
+                            <li>إذا كان مدني اختر مختطف</li>
+                            <li>إذا كان عسكري اختر معتقل</li>
+                        </ul>
+
                     </div>
 
                     <div class="col-md-6">

@@ -28,43 +28,33 @@ class RateLimitInsertJob implements ShouldQueue
 
     public function handle()
     {
+        $data = $this->data;
 
-        $data=$this->data;
+        // احصل على البلد
+        $country = (new \UserSystemInfoHelper)->get_country_from_ip($data['ip']);
 
-        $rate_limits= cache()->get('rate_limits')??[];
-        $rate_limit_details = cache()->get('rate_limit_details')??[];
-
-
-        cache()->remember('rate_limit_'.\MainHelper::slug($data['ip']),60*60,function()use($data,$rate_limits){
-            $country=(new \UserSystemInfoHelper)->get_country_from_ip($data['ip']);
-            array_push($rate_limits, [
-                'traffic_landing'=>$data['traffic_landing'],
-                'domain'=>$data['prev_domain'],
-                'prev_link'=>$data['prev_url'],
-                'ip'=>$data['ip'],
-                'country_code'=>$country['country_code'],
-                'country_name'=>$country['country'],
-                'agent_name'=>$data['agent_name'],
-                'user_id'=>$data['user_id'],
-                'browser'=>$data['browser'],
-                'device'=>$data['device'],
-                'operating_system'=>$data['operating_system'],
-                'created_at'=>\Carbon::parse(now())->format('Y-m-d H:i:s'),
-                'updated_at'=>\Carbon::parse(now())->format('Y-m-d H:i:s'),
-            ]);
-            cache()->put('rate_limits',$rate_limits);
-            return 1;
-        });
-        array_push($rate_limit_details,[
-            'url'=>$data['traffic_landing'],
-            'user_id'=> $data['user_id'],
-            //'rate_limit_id'=>$last_insert->id,
-            'ip'=>$data['ip'],
-            'created_at'=>\Carbon::parse(now())->format('Y-m-d H:i:s'),
-            'updated_at'=>\Carbon::parse(now())->format('Y-m-d H:i:s'),   
+        // حفظ في جدول rate_limits
+        $rateLimit = \App\Models\RateLimit::create([
+            'traffic_landing'    => $data['traffic_landing'],
+            'domain'             => $data['prev_domain'],
+            'prev_link'          => $data['prev_url'],
+            'ip'                 => $data['ip'],
+            'country_code'       => $country['country_code'],
+            'country_name'       => $country['country'],
+            'agent_name'         => $data['agent_name'],
+            'user_id'            => $data['user_id'],
+            'browser'            => $data['browser'],
+            'device'             => $data['device'],
+            'operating_system'   => $data['operating_system'],
         ]);
-        cache()->put('rate_limit_details',$rate_limit_details);
 
-
+        // حفظ التفاصيل في جدول rate_limit_details
+        \App\Models\RateLimitDetail::create([
+            'rate_limit_id' => $rateLimit->id,
+            'url'           => $data['traffic_landing'],
+            'user_id'       => $data['user_id'],
+            'ip'            => $data['ip'],
+        ]);
     }
+
 }

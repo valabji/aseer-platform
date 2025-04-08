@@ -12,21 +12,39 @@ class DetaineeStatusChanged extends Notification
 
     public $tries = 2;
     public $timeout = 10;
+    protected $type;
 
     protected $detainee;
 
-    public function __construct($detainee)
+    public function __construct($detainee, $type = 'status_changed')
     {
+        $this->type = $type;
         $this->detainee = $detainee;
-
-        $this->subject = 'تحديث حالة الأسير';
+        $this->subject = 'تحديث الحالة';
         $this->greeting = 'مرحباً';
-        $this->content = 'تم تغيير حالة الأسير <strong>' . $detainee->name . '</strong> إلى <span class="badge bg-' . ($detainee->status === 'martyr' ? 'danger' : ($detainee->status === 'released' ? 'success' : 'danger')) . '">' . __('status.' . $detainee->status) . '</span>';
 
-        $this->actionText = 'عرض تفاصيل الأسير';
+        if ($type === 'unapproved') {
+            $this->content = 'تم إلغاء نشر الأسير <strong>' . $detainee->name . '</strong>';
+        } else {
+            $statusBadge = '<span class="badge bg-' . $this->getBadgeClass($detainee->status) . '">'
+                . __('status.' . $detainee->status) . '</span>';
+
+            $this->content = 'تم تغيير الحالة <strong>' . $detainee->name . '</strong> إلى ' . $statusBadge;
+        }
+
+        $this->actionText = 'عرض تفاصيل الحالة';
         $this->actionUrl = route('front.detainees.show', $detainee->id);
-        $this->image = $detainee->photos()->featured()->first()->url ?? env("DEFAULT_IMAGE_AVATAR");
-        $this->methods = ['database']; // add 'mail' if you want to send via email
+        $this->image = $detainee->photos()->featured()->first()->url ?? asset('images/default-avatar.png');
+        $this->methods = ['database'];
+    }
+
+    protected function getBadgeClass($status)
+    {
+        return match ($status) {
+            'martyr' => 'danger',
+            'released' => 'success',
+            default => 'secondary',
+        };
     }
 
     public function via($notifiable)
@@ -39,6 +57,7 @@ class DetaineeStatusChanged extends Notification
         return [
             'message' => '<a href="' . $this->actionUrl . '">' . $this->content . '</a>',
             'image' => $this->image,
+            'type' => $this->type ?? 'status_changed',
         ];
     }
 

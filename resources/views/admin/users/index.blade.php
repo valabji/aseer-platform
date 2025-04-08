@@ -36,8 +36,8 @@
 		</div>
 		<div class="col-12 p-3" style="overflow:auto">
 			<div class="col-12 p-0" style="min-width:1100px;min-height: 600px;">
-				
-			
+
+
 			<table class="table table-bordered  table-hover">
 				<thead>
 					<tr>
@@ -66,7 +66,10 @@
 					<tr>
 						<td>{{$user->id}}</td>
 						<td>{{\Carbon::parse($user->last_activity)->diffForHumans()}}</td>
-						<td>{{$user->name}}</td>
+                        <td>
+                            {{$user->name}}
+                            {!! $user->hasVerifiedPhone() ? '<span style="direction:ltr;float:left" class="text-success">✅</span>' : '<span style="direction:ltr;float:left" class="text-danger">❌</span>' !!}
+                        </td>
 						<td>{{$user->email}}</td>
 
 						@if(auth()->user()->can('articles-read'))
@@ -84,7 +87,7 @@
 
 
 						<td>@foreach($user->roles as $role) {{$role->display_name}}<br> @endforeach</td>
-						 
+
 
 						<td>
 							@can('users-read')
@@ -95,8 +98,8 @@
 							</a>
 							@endcan
 
-							
-							
+
+
 
 							@can('notifications-create')
 							<a href="{{route('admin.notifications.index',['user_id'=>$user->id])}}">
@@ -108,7 +111,7 @@
 							<span class="btn  btn-outline-primary btn-sm font-small mx-1">
 								<span class="far fa-bell"></span>
 							</span>
-							</a> 
+							</a>
 							@endcan
 
 							@can('user-roles-update')
@@ -118,7 +121,7 @@
 							</span>
 							</a>
 							@endcan
-							
+
 							@can('users-update')
 							<a href="{{route('admin.users.edit',$user)}}">
 							<span class="btn  btn-outline-success btn-sm font-small mx-1">
@@ -126,8 +129,8 @@
 							</span>
 							</a>
 							@endcan
-							
-						 						 
+
+
 							@can('users-delete')
 							<form method="POST" action="{{route('admin.users.destroy',$user)}}" class="d-inline-block">@csrf @method("DELETE")
 								<button class="btn  btn-outline-danger btn-sm font-small mx-1" onclick="var result = confirm('هل أنت متأكد من عملية الحذف ؟');if(result){}else{event.preventDefault()}">
@@ -147,7 +150,7 @@
 								<li><a class="dropdown-item font-1" href="{{route('admin.users.access',$user)}}"><span class="fal fa-eye"></span> دخول</a></li>
 								@endcan
 
- 
+
 
 								@can('users-update')
 								<li><a class="dropdown-item font-1" href="{{route('admin.traffics.logs',['user_id'=>$user->id])}}"><span class="fal fa-boxes"></span> مراقبة النشاط <span class="badge bg-danger">{{$user->logs_count}}</span></a></li>

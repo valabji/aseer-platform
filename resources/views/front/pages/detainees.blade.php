@@ -4,14 +4,15 @@
     <div class="container py-5 pt-4">
         @php
             $statusInfo = [
-                'detained' => ['label' => 'معتقل',  'color' => 'dark'],
-                'kidnapped' => ['label' => 'مختطف', 'color' => 'dark'],
-                'missing' => ['label' => 'مفقود',  'color' => 'dark'],
-                'released' => ['label' => 'مفرج عنه',  'color' => 'dark'],
-                'martyr' => ['label' => 'شهيد',  'color' => 'danger'],
-                'total' => ['label' => 'الكل',  'color' => 'dark'],
-            ];
+        'detained' => ['label' => 'معتقل',  'color' => 'dark'],
+        'kidnapped' => ['label' => 'مختطف', 'color' => 'dark' ],
+        'missing' => ['label' => 'مفقود',  'color' => 'dark'],
+        'released' => ['label' => 'مفرج عنه',  'color' => 'dark'],
+        'martyr' => ['label' => 'شهيد',  'color' => 'dark'],
+        'total' => ['label' => 'الكل',  'color' => 'dark'],
+    ];
         @endphp
+        {{-- Page Header --}}
         <i class="fa-light fa-user-secret"></i>
         <div class="row g-3 mb-4">
             @foreach($statusInfo as $key => $info)

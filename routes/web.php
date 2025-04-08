@@ -1,10 +1,12 @@
 <?php
 # Backend Controllers
+use App\Http\Controllers\Auth\OTPController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Backend\BackendDetaineeController;
 use App\Http\Controllers\Backend\BackendPluginController;
 use App\Http\Controllers\DetaineeFollowController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\BackendAdminController;
 use App\Http\Controllers\Backend\BackendNotificationsController;
@@ -47,7 +49,18 @@ Route::get('/index2', function () {
     return view('front.index2');
 })->name('index2');
 
-Route::middleware('auth')->group(function () {
+Route::post('/verify-phone/check', [OTPController::class, 'check'])->name('verify.otp.check');
+
+Route::get('/verify-phone', function () {
+    return view('auth.verify-phone');
+})->middleware('auth')->name('phone.verify');
+
+Route::post('/verify-phone/success', [OTPController::class, 'verifySuccess'])
+    ->middleware('auth')
+    ->name('phone.verify.success');
+
+
+Route::middleware(['auth','phone.verified'])->group(function () {
     Route::post('/detainees/{detainee}/follow', [DetaineeFollowController::class, 'follow'])->name('detainees.follow');
     Route::post('/detainees/{detainee}/unfollow', [DetaineeFollowController::class, 'unfollow'])->name('detainees.unfollow');
 });
@@ -57,7 +70,7 @@ Route::get('/detainees', [FrontController::class, 'detainees'])->name('front.det
 
 // detainee with auth
 
-Route::get('/detainees/create', [FrontController::class, 'detainee_create'])->middleware('auth')->name('front.detainees.create');
+Route::get('/detainees/create', [FrontController::class, 'detainee_create'])->middleware('auth','phone.verified')->name('front.detainees.create');
 
 // عرض بيانات أسير مفصلة
 Route::get('/detainees/{id}', [FrontController::class, 'detainee_show'])->name('front.detainees.show');
@@ -71,7 +84,7 @@ Route::post('detainees/{detainee}/report', [FrontController::class, 'reportError
 
 Route::post('/detainees', [FrontController::class, 'detainee_store'])->name('front.detainees.store');
 
-Route::prefix('admin')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->middleware(['auth','phone.verified'])->group(function () {
     Route::delete('/detainees/photo/delete/{id}', [BackendDetaineeController::class, 'deletePhoto'])->name('admin.detainees.photo.delete')
         ->middleware('can:detainees-update');
     Route::post('/detainees/photo/featured/{id}', [BackendDetaineeController::class, 'setfeatured'])->name('admin.detainees.photo.delete')
@@ -91,12 +104,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::put('/detainees/{detainee}', [BackendDetaineeController::class, 'update'])->name('admin.detainees.update');
 
     Route::post('/detainees/{detainee}/approve', [BackendDetaineeController::class, 'approve'])->name('admin.detainees.approve');
+    Route::patch('/detainees/{id}/unapprove', [BackendDetaineeController::class, 'unapprove'])->name('admin.detainees.unapprove');
 
     Route::delete('/detainees/{detainee}', [BackendDetaineeController::class, 'destroy'])->name('admin.detainees.destroy');
 });
 
 
-Route::prefix('dashboard')->middleware(['auth', 'ActiveAccount', 'verified'])->name('user.')->group(function () {
+Route::prefix('dashboard')->middleware(['auth','phone.verified','ActiveAccount', 'verified'])->name('user.')->group(function () {
     Route::get('/detainees/index', [FrontendProfileController::class, 'dashboard'])->name('detainees.index');
     Route::get('/detainees/{detainee}', [FrontendProfileController::class, 'detainee_show'])->name('detainees.show');
     Route::get('/detainees/{detainee}/edit', [FrontendProfileController::class, 'edit'])->name('detainees.edit');
@@ -124,7 +138,7 @@ Route::prefix('dashboard')->middleware(['auth', 'ActiveAccount', 'verified'])->n
 
 #Route::get('/test',[BackendTestController::class,'test']);
 
-Route::prefix('admin')->middleware(['auth', 'ActiveAccount'])->name('admin.')->group(function () {
+Route::prefix('admin')->middleware(['auth','phone.verified', 'ActiveAccount'])->name('admin.')->group(function () {
 
     Route::get('/', [BackendAdminController::class, 'index'])->name('index');
     Route::middleware('auth')->group(function () {

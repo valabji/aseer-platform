@@ -26,16 +26,15 @@
     <table id="myTable" class="table table-striped table-bordered col-12 " style="padding: 0px;min-width: 1200px;">
         <thead>
             <tr>
-                <th style="font-size: 12px">id</th>
-                <th style="font-size: 12px">traffic_landing</th>
-                <th style="font-size: 12px">domain</th>
-                <th style="font-size: 12px">ip</th>
-                <th style="font-size: 12px;max-width: 100px;">device</th>
-                <th style="font-size: 12px">code</th>
-                <th style="font-size: 12px">country_code</th>
-                <th style="font-size: 12px">country_name</th>
-                <th style="font-size: 12px">logs</th>
-                <th style="font-size: 12px">created_at</th>
+                <th style="font-size: 12px">#</th>
+                <th style="font-size: 12px">الوصول</th>
+                <th style="font-size: 12px">الدومين</th>
+                <th style="font-size: 12px">الأي بي</th>
+                <th style="font-size: 12px;max-width: 100px;">نوع الجهاز</th>
+                <th style="font-size: 12px">الكود</th>
+                <th style="font-size: 12px">الدولة</th>
+                <th style="font-size: 12px">التفاصيل</th>
+                <th style="font-size: 12px">في</th>
             </tr>
         </thead>
         <tbody>
@@ -62,9 +61,9 @@
                 <a href="{{$traffic->traffic_landing}}" target="_blank" data-container="body" data-toggle="popover" data-placement="top" data-content="{{$traffic->user_agent}}"  >
                   {{
                     substr(str_replace(env('APP_URL'),'W/',$traffic->traffic_landing), 0, 20)
-                    }} 
+                    }}
                 </a>
-                 </td> 
+                 </td>
               <td style="font-size: 12px">
                 <a href="{{$traffic->prev_link}}">
                     {{parse_url($traffic->prev_link)['host']}}
@@ -72,14 +71,14 @@
               </td>
 
 
-           
+
                 <td style="font-size: 12px">{{$traffic->ip}}</td>
                 <td style="font-size: 9px;max-width: 100px;">
                     {{$traffic->device}}
                 </td>
                 <td style="font-size: 12px">{{$traffic->code}}</td>
-                <td style="font-size: 12px">{{$traffic->country_code}}</td>
-                <td style="font-size: 12px">{{$traffic->country_name}}</td>
+                <td style="font-size: 12px"><img src="https://flagcdn.com/16x12/{{ strtolower($traffic->country_code) }}.png" alt="علم الدولة" style="vertical-align: middle;"></td>
+                <td style="font-size: 12px">{{$traffic->country_name}} </td>
                 <td style="font-size: 12px">
                     <a href="{{route('admin.traffics.logs',['rate_limit_id'=>$traffic->id])}}">
                         <span style="width: 30px;height: 30px;background: #2381c6;color:#fff;border-radius: 50%" class="text-center d-inline-block font-3">
