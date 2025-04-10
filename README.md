@@ -185,9 +185,9 @@ This project uses automated PHP code formatting to maintain consistent code styl
 
 All formatting configurations are committed to the repository and will be automatically applied when following the setup instructions.
 
-### Author 
-https://digitalize.sd
-
+### Sponser 
+- [Digitalize Lab](https://digitalize.sd)
+- [Mazinhost](https://mazinhost.net)
 ### License
 The Laravel framework is open-sourced software licensed under the MIT license.
 
