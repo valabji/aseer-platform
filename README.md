@@ -185,7 +185,7 @@ This project uses automated PHP code formatting to maintain consistent code styl
 
 All formatting configurations are committed to the repository and will be automatically applied when following the setup instructions.
 
-### Sponser 
+### Sponsers
 - [Digitalize Lab](https://digitalize.sd)
 - [Mazinhost](https://mazinhost.net)
 ### License
