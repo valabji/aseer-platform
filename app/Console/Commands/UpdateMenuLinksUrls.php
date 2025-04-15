@@ -46,12 +46,48 @@ class UpdateMenuLinksUrls extends Command
         
         foreach ($menuLinks as $link) {
             $oldUrl = $link->url;
-            $newUrl = MainHelper::menuLinkGenerator($link);
             
-            if ($oldUrl !== $newUrl) {
-                $link->update(['url' => $newUrl]);
-                $count++;
-                $this->line("Updated link: {$link->title} - {$oldUrl} -> {$newUrl}");
+            // Special handling for custom links that might be hardcoded
+            if ($link->type == "CUSTOM_LINK") {
+                // If it's the home page using APP_URL
+                if ($oldUrl == env('APP_URL')) {
+                    $link->url = url('/');
+                    $link->save();
+                    $count++;
+                    $this->line("Updated home link: {$link->title} - {$oldUrl} -> {$link->url}");
+                }
+                // If it's a blog link
+                elseif (strpos($oldUrl, '/blog') !== false) {
+                    $link->url = route('blog');
+                    $link->save();
+                    $count++;
+                    $this->line("Updated blog link: {$link->title} - {$oldUrl} -> {$link->url}");
+                }
+                // If it's a contact link
+                elseif (strpos($oldUrl, '/contact') !== false) {
+                    $link->url = route('contact');
+                    $link->save();
+                    $count++;
+                    $this->line("Updated contact link: {$link->title} - {$oldUrl} -> {$link->url}");
+                }
+                // For other custom links, use the menuLinkGenerator
+                else {
+                    $newUrl = MainHelper::menuLinkGenerator($link);
+                    if ($oldUrl !== $newUrl) {
+                        $link->update(['url' => $newUrl]);
+                        $count++;
+                        $this->line("Updated link: {$link->title} - {$oldUrl} -> {$newUrl}");
+                    }
+                }
+            } 
+            // For PAGE and CATEGORY links
+            else {
+                $newUrl = MainHelper::menuLinkGenerator($link);
+                if ($oldUrl !== $newUrl) {
+                    $link->update(['url' => $newUrl]);
+                    $count++;
+                    $this->line("Updated link: {$link->title} - {$oldUrl} -> {$newUrl}");
+                }
             }
         }
         
