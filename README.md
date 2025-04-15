@@ -87,15 +87,10 @@ php artisan storage:link
 4. Run database migrations and seed the database 
 
 ```bash
-php artisan migrate
-php artisan db:seed --class=SettingsSeeder
-php artisan db:seed --class=UsersSeeder
-php artisan db:seed --class=PagesSeeder
-php artisan db:seed --class=MenusSeeder
-php artisan db:seed --class=PermissionsSeeder
-php artisan db:seed --class=AttachSuperAdminPermissions
-php artisan db:seed --class=DetaineeSeeder
-php artisan db:seed --class=DetaineePermissionsSeeder
+
+php artisan migrate:fresh
+php artisan db:seed
+
 ```
 
 5. Start the development server
