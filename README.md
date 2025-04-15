@@ -54,6 +54,77 @@ Live [Aseer Platform](https://aseer.net/)
 
 ### How to setup
 
+### macOS Setup Instructions
+
+If you're setting up the Aseer Platform on macOS, follow these steps to install the required tools:
+
+#### SQLite Setup (For Quick Testing)
+
+```bash
+brew install php composer mysql php-imagick
+pecl install imagick
+```
+
+1. create .env file with SQLite configuration (Update the .env file with appropriate connection settings):
+
+```bash
+cp .env.example .env and ```
+
+2.  Create SQLite database file
+
+```bash
+touch database/database.sqlite
+```
+
+3. Generate application key (if not already set) and storage symlink:
+
+```bash
+php artisan key:generate
+php artisan storage:link
+```
+
+4. Run database migrations and seed the database 
+
+```bash
+php artisan migrate
+php artisan db:seed --class=SettingsSeeder
+php artisan db:seed --class=UsersSeeder
+php artisan db:seed --class=PagesSeeder
+php artisan db:seed --class=MenusSeeder
+php artisan db:seed --class=PermissionsSeeder
+php artisan db:seed --class=AttachSuperAdminPermissions
+php artisan db:seed --class=DetaineeSeeder
+php artisan db:seed --class=DetaineePermissionsSeeder
+```
+
+5. Start the development server
+
+```bash
+php artisan serve
+```
+
+### MySQL Setup (For Production)
+
+1. Start MySQL 
+
+```bash
+brew services start mysql
+```
+
+2. Configure .env for MySQL - Update the .env file with appropriate connection settings:
+
+```bash
+cp .env.example .env and ```
+
+3. Create the database 
+
+```bash
+mysql -u root -p -e "CREATE DATABASE aseer CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+```
+
+### Ubuntu/Debian Linux Setup Instructions
+
 ```bash
 #dont forget to install 
 sudo apt-get install php-imagick
@@ -71,6 +142,7 @@ php artisan db:seed
 php artisan queue:work
 php artisan schedule:work 
 ```
+
 
 ### Credentials
 
