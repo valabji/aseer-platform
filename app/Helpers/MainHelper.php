@@ -196,16 +196,25 @@ class MainHelper
     public static function menuLinkGenerator(MenuLink $link)
     {
         if ($link->type == "CUSTOM_LINK") {
-            return $link->url;
+            #return $link->url;
+            if (filter_var($link->url, FILTER_VALIDATE_URL)) {
+                return $link->url;
+            }
+            if (str_starts_with($link->url, '/')) {
+                return url($link->url);
+            }
+            return url($link->url);            
         } elseif ($link->type == "PAGE") {
             $page = \App\Models\Page::where('id', $link->type_id)->first();
             if ($page == null)
-                return env("APP_URL");
+                #return env("APP_URL");
+                return url('/');
             return route('page.show', $page);
         } elseif ($link->type == "CATEGORY") {
             $category = \App\Models\Category::where('id', $link->type_id)->first();
             if ($category == null)
-                return env("APP_URL");
+                #return env("APP_URL");
+                return url('/');
             return route('category.show', $category);
         }
     }
