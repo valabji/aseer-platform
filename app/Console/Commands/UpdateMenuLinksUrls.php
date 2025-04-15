@@ -49,8 +49,8 @@ class UpdateMenuLinksUrls extends Command
             
             // Special handling for custom links that might be hardcoded
             if ($link->type == "CUSTOM_LINK") {
-                // If it's the home page using APP_URL
-                if ($oldUrl == env('APP_URL')) {
+                // If it's the home page using APP_URL or just http://localhost
+                if ($oldUrl == env('APP_URL') || $oldUrl == 'http://localhost' || $link->title == 'الرئيسية') {
                     $link->url = url('/');
                     $link->save();
                     $count++;
