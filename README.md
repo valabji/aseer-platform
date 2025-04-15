@@ -68,7 +68,8 @@ pecl install imagick
 1. create .env file with SQLite configuration (Update the .env file with appropriate connection settings):
 
 ```bash
-cp .env.example .env and ```
+cp .env.example .env and
+```
 
 2.  Create SQLite database file
 
@@ -107,7 +108,7 @@ php artisan serve
 
 1. Start MySQL 
 
-```bash
+```
 brew services start mysql
 ```
 
