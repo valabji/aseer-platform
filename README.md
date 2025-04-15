@@ -114,13 +114,13 @@ brew services start mysql
 2. Configure .env for MySQL - Update the .env file with appropriate connection settings:
 
 ```bash
-cp .env.example .env and ```
+cp .env.example .env and 
+```
 
 3. Create the database 
 
 ```bash
 mysql -u root -p -e "CREATE DATABASE aseer CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-
 ```
 
 ### Ubuntu/Debian Linux Setup Instructions
