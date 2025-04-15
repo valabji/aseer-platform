@@ -137,6 +137,7 @@ php artisan db:seed
 # don't forget to start queuing and run schedule on the background 
 php artisan queue:work
 php artisan schedule:work 
+php artisan menu:update-links
 ```
 
 
