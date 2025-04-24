@@ -6,11 +6,13 @@
 [![Laravel](https://img.shields.io/badge/Spatie-11.x-orange.svg)](https://spatie.be/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-![Platform Screenshot](https://raw.githubusercontent.com/amolood/aseer-platform/main/434013236-8b59d4c3-3165-4284-b3cb-5e6ef60d1e7f.png)
-
 
 ### A humanitarian platform to document and manage data related to detainees, missing persons, unidentified individuals, and national initiatives during the war in Sudan.
 Live [Aseer Platform](https://aseer.net/)
+
+![Platform Screenshot](https://raw.githubusercontent.com/amolood/aseer-platform/main/434013236-8b59d4c3-3165-4284-b3cb-5e6ef60d1e7f.png)
+
+
 ## Features
 
 - ✅ Detainee management module with photos , details, and status
