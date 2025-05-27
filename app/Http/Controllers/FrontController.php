@@ -209,7 +209,7 @@ class FrontController extends Controller
             ->get();
 
         $photos = $car->photos;
-        $page_image = $car->photos()->where('is_featured', true)->first()->url ?? null;
+        $page_image = optional($car->photos()->where('is_featured', true)->first())->url;
         $page_description = sprintf('%s %s %s في %s منذ %s',
             $car->manufacturer,
             $car->model,
