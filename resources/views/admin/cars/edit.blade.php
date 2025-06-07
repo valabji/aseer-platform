@@ -165,7 +165,7 @@
                                     @foreach($car->photos as $photo)
                                         <div class="col-sm-6 col-md-4 col-lg-3">
                                             <div class="card">
-                                                <img src="{{ asset($photo->url) }}" class="card-img-top" alt="صورة للسيارة">
+                                                <img src="{{ asset('storage/public/' . $photo->path) }}" class="card-img-top" alt="صورة للسيارة">
                                                 <div class="card-body p-2">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" name="featured_photo"
@@ -177,7 +177,7 @@
                                                     </div>
                                                     <button type="button" class="btn btn-sm btn-outline-danger mt-2 w-100"
                                                             onclick="deletePhoto({{ $photo->id }})">
-                                                        <i class="fas fa-trash-alt"></i> حذف
+                                                        <i class="fas fa-trash-alt me-1"></i> حذف
                                                     </button>
                                                 </div>
                                             </div>

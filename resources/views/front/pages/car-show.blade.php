@@ -22,7 +22,7 @@
                             <div class="carousel-inner">
                                 @foreach($car->photos as $index => $photo)
                                     <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                        <img src="{{ asset($photo->url) }}" class="d-block w-100" alt="صورة السيارة"
+                                        <img src="{{ asset('storage/public/' . $photo->path) }}" class="d-block w-100" alt="صورة السيارة"
                                              style="height: 400px; object-fit: contain;">
                                     </div>
                                 @endforeach

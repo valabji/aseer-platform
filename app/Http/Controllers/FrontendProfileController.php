@@ -134,10 +134,10 @@ class FrontendProfileController extends Controller
         }
 
         $validated = $request->validate([
-            'make' => 'required|string|max:255',
+            'manufacturer' => 'required|string|max:255',
             'model' => 'required|string|max:255',
             'year' => 'nullable|integer|min:1900|max:' . (date('Y') + 1),
-            'plate_number' => 'nullable|string|max:255',
+            'license_plate' => 'nullable|string|max:255',
             'color' => 'nullable|string|max:255',
             'location' => 'nullable|string|max:255',
             'missing_date' => 'nullable|date',
@@ -185,10 +185,10 @@ class FrontendProfileController extends Controller
     public function car_store(Request $request)
     {
         $validated = $request->validate([
-            'make' => 'required|string|max:255',
+            'manufacturer' => 'required|string|max:255',
             'model' => 'required|string|max:255',
             'year' => 'nullable|integer|min:1900|max:' . (date('Y') + 1),
-            'plate_number' => 'nullable|string|max:255',
+            'license_plate' => 'nullable|string|max:255',
             'color' => 'nullable|string|max:255',
             'location' => 'nullable|string|max:255',
             'missing_date' => 'nullable|date',

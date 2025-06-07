@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('car_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-            $table->string('location');
+            $table->string('location')->nullable(); // Location can be null for error reports
             $table->text('details')->nullable();
             $table->string('contact_info')->nullable();
             $table->enum('report_type', ['sighting', 'error'])->default('sighting');

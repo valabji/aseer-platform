@@ -25,10 +25,10 @@
                             @foreach($cars as $car)
                                 <tr>
                                     <td>{{ $car->id }}</td>
-                                    <td>{{ $car->make }}</td>
+                                    <td>{{ $car->manufacturer }}</td>
                                     <td>{{ $car->model }}</td>
                                     <td>{{ $car->year }}</td>
-                                    <td>{{ $car->plate_number }}</td>
+                                    <td>{{ $car->license_plate }}</td>
                                     <td>
                                         {{ $car->is_approved ? '✔️ منشور' : '🚫 في إنتظار النشر' }}
                                     </td>

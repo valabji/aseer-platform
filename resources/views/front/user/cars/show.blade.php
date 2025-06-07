@@ -15,7 +15,7 @@
                     <div class="row mb-4">
                         @foreach($car->photos as $photo)
                             <div class="col-md-4 mb-3">
-                                <img src="{{ asset('storage/' . $photo->path) }}"
+                                <img src="{{ asset('storage/public/' . $photo->path) }}"
                                      class="img-fluid rounded {{ $photo->is_featured ? 'border border-primary' : '' }}"
                                      alt="صورة السيارة">
                             </div>
@@ -40,7 +40,7 @@
                             </tr>
                             <tr>
                                 <th>رقم اللوحة:</th>
-                                <td>{{ $car->plate_number }}</td>
+                                <td>{{ $car->license_plate }}</td>
                             </tr>
                             <tr>
                                 <th>اللون:</th>
@@ -65,7 +65,7 @@
                                             <span class="badge bg-success">تم العثور عليها</span>
                                             @break
                                         @case('stolen')
-                                            <span class="badge bg-warning text-dark">مسروقة</span>
+                                            <span class="badge bg-danger">مسروقة</span>
                                             @break
                                     @endswitch
                                 </td>

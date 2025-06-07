@@ -12,9 +12,9 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">الماركة *</label>
-                            <input type="text" class="form-control @error('make') is-invalid @enderror"
-                                   name="make" value="{{ old('make') }}" required>
-                            @error('make')
+                            <input type="text" class="form-control @error('manufacturer') is-invalid @enderror"
+                                   name="manufacturer" value="{{ old('manufacturer') }}" required>
+                            @error('manufacturer')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -40,9 +40,9 @@
 
                         <div class="col-md-4 mb-3">
                             <label class="form-label">رقم اللوحة</label>
-                            <input type="text" class="form-control @error('plate_number') is-invalid @enderror"
-                                   name="plate_number" value="{{ old('plate_number') }}">
-                            @error('plate_number')
+                            <input type="text" class="form-control @error('license_plate') is-invalid @enderror"
+                                   name="license_plate" value="{{ old('license_plate') }}">
+                            @error('license_plate')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -56,7 +56,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label class="form-label">الموقع</label>
                             <input type="text" class="form-control @error('location') is-invalid @enderror"
                                    name="location" value="{{ old('location') }}">
@@ -74,9 +74,9 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-12 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label class="form-label">الحالة *</label>
-                            <select class="form-select @error('status') is-invalid @enderror" name="status" required>
+                            <select class="form-control form-select @error('status') is-invalid @enderror" name="status" required>
                                 <option value="">اختر الحالة</option>
                                 <option value="missing" {{ old('status') == 'missing' ? 'selected' : '' }}>مفقودة</option>
                                 <option value="found" {{ old('status') == 'found' ? 'selected' : '' }}>تم العثور عليها</option>
@@ -137,8 +137,8 @@
                         </div>
 
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-1"></i> إضافة السيارة
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-paper-plane me-1"></i> إضافة السيارة
                             </button>
                             <a href="{{ route('user.cars.index') }}" class="btn btn-light">
                                 <i class="fas fa-times me-1"></i> إلغاء

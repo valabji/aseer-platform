@@ -27,8 +27,6 @@ class CarPhoto extends Model
 
     public function getUrlAttribute(): string
     {
-        // Remove 'public/' from the start of the path since it's already handled by the storage symlink
-        $path = str_replace('public/', '', $this->path);
-        return asset('storage/' . $path);
+        return asset('storage/public/' . $this->path);
     }
 }

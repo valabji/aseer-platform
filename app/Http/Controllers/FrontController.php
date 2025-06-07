@@ -278,8 +278,9 @@ class FrontController extends Controller
     {
         $request->validate([
             'details' => 'required|string',
-            'location' => 'required|string|max:255',
             'contact_info' => 'nullable|string|max:255',
+            'report_type' => 'required|in:sighting,error', // Optional, defaults to 'sighting'
+            'location' => 'required_if:report_type,==,sighting"|string|max:255',
         ]);
 
         $car->reports()->create([
@@ -287,7 +288,7 @@ class FrontController extends Controller
             'location' => $request->location,
             'details' => $request->details,
             'contact_info' => $request->contact_info,
-            'report_type' => 'sighting'
+            'report_type' => $request->report_type ?? 'sighting', // Default to 'sighting' if not provided
         ]);
 
         return back()->with('success', 'تم إرسال البلاغ، شكرًا لمساهمتك.');

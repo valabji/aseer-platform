@@ -6,15 +6,15 @@
             <div class="col-12 mb-4">
                 <div class="row g-3">
                     <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card border-0 shadow-sm">
+                        <div class="card border-0 shadow bg-dark">
                             <div class="card-body">
-                                <h6 class="mb-2">إجمالي السيارات</h6>
-                                <h3 class="mb-0">{{ $allStatuses['total'] ?? 0 }}</h3>
+                                <h6 class="mb-2 text-white">إجمالي السيارات</h6>
+                                <h3 class="mb-0 text-white">{{ $allStatuses['total'] ?? 0 }}</h3>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card border-0 shadow-sm bg-danger text-white">
+                        <div class="card border-0 shadow bg-danger text-white">
                             <div class="card-body">
                                 <h6 class="mb-2">السيارات المسروقة</h6>
                                 <h3 class="mb-0">{{ $allStatuses['stolen'] ?? 0 }}</h3>
@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card border-0 shadow-sm bg-warning">
+                        <div class="card border-0 shadow bg-warning">
                             <div class="card-body">
                                 <h6 class="mb-2">السيارات المفقودة</h6>
                                 <h3 class="mb-0">{{ $allStatuses['missing'] ?? 0 }}</h3>
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card border-0 shadow-sm bg-success text-white">
+                        <div class="card border-0 shadow bg-success text-white">
                             <div class="card-body">
                                 <h6 class="mb-2">تم العثور عليها</h6>
                                 <h3 class="mb-0">{{ $allStatuses['found'] ?? 0 }}</h3>
@@ -88,9 +88,9 @@
                 <div class="row g-4">
                     @forelse($cars as $car)
                         <div class="col-sm-6 col-lg-4">
-                            <div class="card h-100 border-0 shadow-sm">
+                            <div class="card h-100 border-0 shadow">
                                 @if($car->photos->where('is_featured', true)->first())
-                                    <img src="{{ asset($car->photos->where('is_featured', true)->first()->url) }}"
+                                    <img src="{{asset( 'storage/public/' . $car->photos->where('is_featured', true)->first()->path) }}"
                                          class="card-img-top" alt="{{ $car->manufacturer }} {{ $car->model }}"
                                          style="height: 200px; object-fit: cover;">
                                 @else
