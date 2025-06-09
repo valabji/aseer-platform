@@ -98,17 +98,25 @@ class BackendCarController extends Controller
                 CarPhoto::create([
                     'car_id' => $car->id,
                     'path' => $path,
+                    'is_featured' => false, // Set initially to false
                 ]);
             }
         }
 
         // Handle featured photo
         if ($request->filled('featured_photo')) {
+            // If a specific featured photo is selected
             $car->photos()->update(['is_featured' => false]);
             CarPhoto::where('id', $request->featured_photo)->update(['is_featured' => true]);
-        }
-        else if ($car->photos()->count() > 0 && !$car->photos()->where('is_featured', true)->exists()) {
-            $car->photos()->first()->update(['is_featured' => true]);
+        } else {
+            // Auto set featured photo if none exists
+            if (!$car->photos()->where('is_featured', true)->exists()) {
+                // Get the first photo (either newly uploaded or existing)
+                $firstPhoto = $car->photos()->first();
+                if ($firstPhoto) {
+                    $firstPhoto->update(['is_featured' => true]);
+                }
+            }
         }
 
         if (!empty($updatedFields)) {

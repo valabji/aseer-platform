@@ -88,7 +88,7 @@
                                     <div class="col-md-6">
                                         <label class="form-label">تاريخ الفقدان</label>
                                         <input type="date" name="missing_date" class="form-control @error('missing_date') is-invalid @enderror"
-                                               value="{{ old('missing_date', $car->missing_date?->format('Y-m-d')) }}">
+                                               value="{{ old('missing_date', $car->missing_date ? $car->missing_date->format('Y-m-d') : '') }}">
                                         @error('missing_date')
                                             <span class="invalid-feedback">{{ $message }}</span>
                                         @enderror
@@ -210,17 +210,29 @@
     <script>
         function deletePhoto(id) {
             if (confirm('هل أنت متأكد من حذف هذه الصورة؟')) {
+                const photoCard = document.querySelector(`button[onclick="deletePhoto(${id})"]`).closest('.col-sm-6');
+
                 fetch(`/admin/cars/photo/delete/${id}`, {
                     method: 'DELETE',
                     headers: {
+                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
                     },
-                }).then(response => response.json())
-                  .then(data => {
-                      if (data.success) {
-                          location.reload();
-                      }
-                  });
+                    body: JSON.stringify({ id: id })
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                }).then(data => {
+                    if (data.success) {
+                        photoCard.remove();
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                    alert('حدث خطأ أثناء حذف الصورة');
+                });
             }
         }
     </script>

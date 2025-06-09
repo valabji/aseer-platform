@@ -69,7 +69,7 @@
                         <div class="col-md-6 mb-3">
                             <label class="form-label">تاريخ الفقدان</label>
                             <input type="date" class="form-control @error('missing_date') is-invalid @enderror"
-                                   name="missing_date" value="{{ old('missing_date', $car->missing_date ? \Carbon\Carbon::parse($car->missing_date)->format('Y-m-d') : '') }}">
+                                   name="missing_date" value="{{ old('missing_date', $car->missing_date ? $car->missing_date->format('Y-m-d') : '') }}">
                             @error('missing_date')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -178,4 +178,33 @@
             </div>
         </div>
     </div>
+    <script>
+        function deletePhoto(id) {
+            if (confirm('هل أنت متأكد من حذف هذه الصورة؟')) {
+                const photoCard = document.querySelector(`button[onclick="deletePhoto(${id})"]`).closest('.col-sm-6');
+
+                fetch(`/admin/cars/photo/delete/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ id: id })
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                }).then(data => {
+                    if (data.success) {
+                        photoCard.remove();
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                    alert('حدث خطأ أثناء حذف الصورة');
+                });
+            }
+        }
+    </script>
 @endsection

@@ -11,33 +11,70 @@
                             <h3 class="mb-1">{{ $car->manufacturer }} {{ $car->model }}</h3>
                             <p class="text-muted mb-0">{{ $car->year ?? 'السنة غير محددة' }}</p>
                         </div>
-                        <span class="badge bg-{{ $car->status === 'found' ? 'success' : ($car->status === 'stolen' ? 'danger' : 'warning') }} fs-6">
+                        <span class="badge bg-{{ $car->status === 'found' ? 'success' : ($car->status === 'stolen' ? 'danger' : 'warning') }} ">
                             {{ __('car_status.' . $car->status) }}
                         </span>
                     </div>
 
                     {{-- Car Photos Carousel --}}
                     @if($car->photos->count() > 0)
-                        <div id="carPhotosCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
-                            <div class="carousel-inner">
+                        <div id="carPhotosCarousel" class="custom-carousel mb-4 position-relative">
+                            <div class="carousel-container" style="height: 400px; position: relative; overflow: hidden;">
                                 @foreach($car->photos as $index => $photo)
-                                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                        <img src="{{ asset('storage/public/' . $photo->path) }}" class="d-block w-100" alt="صورة السيارة"
-                                             style="height: 400px; object-fit: contain;">
+                                    <div class="carousel-slide" style="position: absolute; width: 100%; height: 100%; opacity: {{ $index === 0 ? '1' : '0' }}; transition: opacity 0.5s ease-in-out;">
+                                        <img src="{{ asset('storage/public/' . $photo->path) }}" class="d-block w-100 h-100" alt="صورة السيارة"
+                                             style="object-fit: contain; background-color: #f8f9fa;">
                                     </div>
                                 @endforeach
                             </div>
                             @if($car->photos->count() > 1)
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carPhotosCarousel" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">السابق</span>
+                                <button class="carousel-nav-btn prev-btn" onclick="moveSlide(-1)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(0,0,0,0.5); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                                    <i class="fas fa-chevron-left"></i>
                                 </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carPhotosCarousel" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">التالي</span>
+                                <button class="carousel-nav-btn next-btn" onclick="moveSlide(1)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(0,0,0,0.5); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                                    <i class="fas fa-chevron-right"></i>
                                 </button>
                             @endif
+
+                            {{-- Thumbnails --}}
+                            <div class="carousel-thumbnails mt-2" style="display: flex; gap: 8px; overflow-x: auto; padding: 4px;">
+                                @foreach($car->photos as $index => $photo)
+                                    <div onclick="goToSlide({{ $index }})"
+                                         style="width: 60px; height: 60px; flex-shrink: 0; cursor: pointer; border: 2px solid {{ $index === 0 ? '#007bff' : 'transparent' }}; border-radius: 4px; overflow: hidden;">
+                                        <img src="{{ asset('storage/public/' . $photo->path) }}"
+                                             alt="thumbnail"
+                                             style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
+
+                        <script>
+                            let currentSlide = 0;
+                            const slides = document.querySelectorAll('.carousel-slide');
+                            const thumbnails = document.querySelectorAll('.carousel-thumbnails > div');
+                            const totalSlides = slides.length;
+
+                            function showSlide(n) {
+                                currentSlide = (n + totalSlides) % totalSlides;
+
+                                slides.forEach((slide, i) => {
+                                    slide.style.opacity = i === currentSlide ? '1' : '0';
+                                });
+
+                                thumbnails.forEach((thumb, i) => {
+                                    thumb.style.border = i === currentSlide ? '2px solid #007bff' : '2px solid transparent';
+                                });
+                            }
+
+                            function moveSlide(direction) {
+                                showSlide(currentSlide + direction);
+                            }
+
+                            function goToSlide(n) {
+                                showSlide(n);
+                            }
+                        </script>
                     @else
                         <div class="text-center py-5 bg-light mb-4">
                             <i class="fas fa-car fa-3x text-muted mb-3"></i>

@@ -83,7 +83,7 @@
                                     <td>{{ $car->license_plate ?? '—' }}</td>
                                     <td>{{ $car->manufacturer }} {{ $car->model }} {{ $car->year }}</td>
                                     <td>{{ __('car_status.' . $car->status) }}</td>
-                                    <td>{{ $car->missing_date ?? '—' }}</td>
+                                    <td>{{ $car->missing_date ? $car->missing_date->format('Y-m-d') : '—' }}</td>
                                     <td>
                                         @if($car->is_approved)
                                             @can('cars-update')

@@ -22,7 +22,7 @@
                 <div class="col-md-6">
                     <p><strong>الحالة:</strong> {{ __('car_status.' . $car->status) }}</p>
                     <p><strong>الموقع:</strong> {{ $car->location ?? 'غير معروف' }}</p>
-                    <p><strong>تاريخ الفقدان:</strong> {{ $car->missing_date ?? 'غير معروف' }}</p>
+                    <p><strong>تاريخ الفقدان:</strong> {{ $car->missing_date ? $car->missing_date->format('Y-m-d') : 'غير معروف' }}</p>
                     <p><strong>اسم المالك:</strong> {{ $car->owner_name ?? 'غير معروف' }}</p>
                     <p><strong>رقم التواصل:</strong> {{ $car->owner_contact ?? 'غير معروف' }}</p>
                 </div>
